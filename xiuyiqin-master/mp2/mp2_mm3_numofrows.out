@@ -1,0 +1,19 @@
+MM1:
+Time: 15.521033s
+
+MM2:
+Time: 5.770514s
+for process 7 we have rows of 684775
+for process 3 we have rows of 878555
+for process 2 we have rows of 986230
+for process 1 we have rows of 1172940
+for process 5 we have rows of 758305
+for process 4 we have rows of 807765
+for process 6 we have rows of 712430
+TEST PASSED
+
+MM3:
+for process 0 we have rows of 2001000
+Time: 2.916466s
+TEST PASSED
+

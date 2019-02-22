@@ -1,0 +1,842 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 18.0.0.128 Build 20170811
+
+Compiler options: -std=gnu99 -O3 -qopt-report=5 -lrt -o mp0_b
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: main(int, char **)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main(int, char **)) [1/7=14.3%] mp0_b.c(17,1)
+  -> INLINE: (18,2) test1(void) (isz = 75) (sz = 78)
+    -> INLINE: (34,14) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> INLINE: (38,7) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> EXTERN: (43,2) printf(const char *__restrict__, ...)
+  -> INLINE: (19,2) test2(void) (isz = 139) (sz = 142)
+    -> EXTERN: (49,11) malloc(size_t)
+    -> EXTERN: (50,11) malloc(size_t)
+    -> EXTERN: (51,11) malloc(size_t)
+    -> EXTERN: (54,2) srand(unsigned int)
+    -> EXTERN: (54,8) time(time_t *)
+    -> EXTERN: (56,10) rand(void)
+    -> EXTERN: (57,10) rand(void)
+    -> INLINE: (62,14) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> INLINE: (66,7) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> EXTERN: (71,2) free(void *)
+    -> EXTERN: (72,2) free(void *)
+    -> EXTERN: (73,2) free(void *)
+    -> EXTERN: (75,2) printf(const char *__restrict__, ...)
+  -> INLINE: (20,2) test3(void) (isz = 98) (sz = 101)
+    -> EXTERN: (81,11) malloc(size_t)
+    -> INLINE: (86,14) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> INLINE: (91,7) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> EXTERN: (96,2) free(void *)
+    -> EXTERN: (98,2) printf(const char *__restrict__, ...)
+  -> INLINE: (21,2) test4(void) (isz = 151) (sz = 154)
+    -> EXTERN: (104,11) malloc(size_t)
+    -> EXTERN: (105,11) malloc(size_t)
+    -> EXTERN: (108,2) srand(unsigned int)
+    -> EXTERN: (108,8) time(time_t *)
+    -> EXTERN: (111,17) rand(void)
+    -> INLINE: (115,14) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> INLINE: (120,7) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> EXTERN: (125,2) free(void *)
+    -> EXTERN: (126,2) free(void *)
+    -> EXTERN: (128,2) printf(const char *__restrict__, ...)
+  -> INLINE: (22,2) test5(void) (isz = 104) (sz = 107)
+    -> EXTERN: (134,11) malloc(size_t)
+    -> INLINE: (140,14) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> INLINE: (147,7) get_clock(void) (isz = 15) (sz = 20)
+      -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+      -> EXTERN: (162,3) err(int, const char *, ...)
+    -> EXTERN: (152,2) free(void *)
+    -> EXTERN: (154,2) printf(const char *__restrict__, ...)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mp0_b.c(30,2) inlined into mp0_b.c(18,2)
+   remark #15520: loop was not vectorized: loop with multiple exits cannot be vectorized unless it meets search loop idiom criteria   [ mp0_b.c(162,3) ]
+   remark #25436: completely unrolled by 10  
+LOOP END
+
+LOOP BEGIN at mp0_b.c(55,2) inlined into mp0_b.c(19,2)
+   remark #15382: vectorization support: call to function rand(void) cannot be vectorized   [ mp0_b.c(56,10) ]
+   remark #15382: vectorization support: call to function rand(void) cannot be vectorized   [ mp0_b.c(57,10) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (56:10) and call:rand(void) (57:10)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (57:10) and call:rand(void) (56:10)
+LOOP END
+
+LOOP BEGIN at mp0_b.c(60,2) inlined into mp0_b.c(19,2)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mp0_b.c(63,3) inlined into mp0_b.c(19,2)
+   <Peeled loop for vectorization>
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(63,3) inlined into mp0_b.c(19,2)
+      remark #15388: vectorization support: reference C[i] has aligned access   [ mp0_b.c(64,4) ]
+      remark #15389: vectorization support: reference A[i] has unaligned access   [ mp0_b.c(64,11) ]
+      remark #15388: vectorization support: reference B[i] has aligned access   [ mp0_b.c(64,18) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15412: vectorization support: streaming store was generated for C[i]   [ mp0_b.c(64,4) ]
+      remark #15412: vectorization support: streaming store was generated for C[i]   [ mp0_b.c(64,4) ]
+      remark #15305: vectorization support: vector length 4
+      remark #15309: vectorization support: normalized vectorization overhead 2.429
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15442: entire loop may be executed in remainder
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15450: unmasked unaligned unit stride loads: 1 
+      remark #15467: unmasked aligned streaming stores: 2 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 8 
+      remark #15477: vector cost: 1.750 
+      remark #15478: estimated potential speedup: 4.570 
+      remark #15488: --- end vector cost summary ---
+      remark #25015: Estimate of max trip count of loop=250000
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(63,3) inlined into mp0_b.c(19,2)
+   <Alternate Alignment Vectorized Loop>
+      remark #25015: Estimate of max trip count of loop=250000
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(63,3) inlined into mp0_b.c(19,2)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at mp0_b.c(84,2) inlined into mp0_b.c(20,2)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mp0_b.c(88,4) inlined into mp0_b.c(20,2)
+      remark #25444: Loopnest Interchanged: ( 1 2 ) --> ( 2 1 )
+      remark #15542: loop was not vectorized: inner loop was already vectorized   [ mp0_b.c(88,4) ]
+
+      LOOP BEGIN at mp0_b.c(87,3) inlined into mp0_b.c(20,2)
+      <Peeled loop for vectorization>
+         remark #25015: Estimate of max trip count of loop=3
+      LOOP END
+
+      LOOP BEGIN at mp0_b.c(87,3) inlined into mp0_b.c(20,2)
+         remark #15388: vectorization support: reference A[i*1024+j] has aligned access   [ mp0_b.c(89,5) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15399: vectorization support: unroll factor set to 4
+         remark #15309: vectorization support: normalized vectorization overhead 0.833
+         remark #15301: PERMUTED LOOP WAS VECTORIZED
+         remark #15442: entire loop may be executed in remainder
+         remark #15449: unmasked aligned unit stride stores: 1 
+         remark #15475: --- begin vector cost summary ---
+         remark #15476: scalar cost: 3 
+         remark #15477: vector cost: 0.750 
+         remark #15478: estimated potential speedup: 3.770 
+         remark #15488: --- end vector cost summary ---
+         remark #25015: Estimate of max trip count of loop=64
+      LOOP END
+
+      LOOP BEGIN at mp0_b.c(87,3) inlined into mp0_b.c(20,2)
+      <Remainder loop for vectorization>
+         remark #15388: vectorization support: reference A[i*1024+j] has aligned access   [ mp0_b.c(89,5) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15309: vectorization support: normalized vectorization overhead 2.000
+         remark #15301: REMAINDER LOOP WAS VECTORIZED
+      LOOP END
+
+      LOOP BEGIN at mp0_b.c(87,3) inlined into mp0_b.c(20,2)
+      <Remainder loop for vectorization>
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at mp0_b.c(109,2) inlined into mp0_b.c(21,2)
+   remark #15382: vectorization support: call to function rand(void) cannot be vectorized   [ mp0_b.c(111,17) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (111:17) and call:rand(void) (111:17)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (111:17) and call:rand(void) (111:17)
+
+   LOOP BEGIN at mp0_b.c(110,3) inlined into mp0_b.c(21,2)
+      remark #15527: loop was not vectorized: function call to rand(void) cannot be vectorized   [ mp0_b.c(111,17) ]
+   LOOP END
+LOOP END
+
+LOOP BEGIN at mp0_b.c(113,2) inlined into mp0_b.c(21,2)
+   remark #15520: loop was not vectorized: loop with multiple exits cannot be vectorized unless it meets search loop idiom criteria   [ mp0_b.c(162,3) ]
+
+   LOOP BEGIN at mp0_b.c(117,4) inlined into mp0_b.c(21,2)
+      remark #25444: Loopnest Interchanged: ( 1 2 ) --> ( 2 1 )
+      remark #15389: vectorization support: reference A[i*1024+j] has unaligned access   [ mp0_b.c(118,18) ]
+      remark #15381: vectorization support: unaligned access used inside loop body   [ mp0_b.c(117,4) ]
+      remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override    [ mp0_b.c(117,4) ]
+      remark #15329: vectorization support: non-unit strided store was emulated for the variable <B[j*1024+i]>, stride is 1024   [ mp0_b.c(118,5) ]
+      remark #15305: vectorization support: vector length 4   [ mp0_b.c(117,4) ]
+      remark #15309: vectorization support: normalized vectorization overhead 0.079   [ mp0_b.c(117,4) ]
+      remark #15450: unmasked unaligned unit stride loads: 1    [ mp0_b.c(117,4) ]
+      remark #15453: unmasked strided stores: 1    [ mp0_b.c(117,4) ]
+      remark #15475: --- begin vector cost summary ---   [ mp0_b.c(117,4) ]
+      remark #15476: scalar cost: 5    [ mp0_b.c(117,4) ]
+      remark #15477: vector cost: 9.500    [ mp0_b.c(117,4) ]
+      remark #15478: estimated potential speedup: 0.520    [ mp0_b.c(117,4) ]
+      remark #15488: --- end vector cost summary ---   [ mp0_b.c(117,4) ]
+
+      LOOP BEGIN at mp0_b.c(116,3) inlined into mp0_b.c(21,2)
+         remark #15389: vectorization support: reference B[j*1024+i] has unaligned access   [ mp0_b.c(118,5) ]
+         remark #15381: vectorization support: unaligned access used inside loop body
+         remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+         remark #15328: vectorization support: non-unit strided load was emulated for the variable <A[i*1024+j]>, stride is 1024   [ mp0_b.c(118,18) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15309: vectorization support: normalized vectorization overhead 0.079
+         remark #15451: unmasked unaligned unit stride stores: 1 
+         remark #15452: unmasked strided loads: 1 
+         remark #15475: --- begin vector cost summary ---
+         remark #15476: scalar cost: 5 
+         remark #15477: vector cost: 9.500 
+         remark #15478: estimated potential speedup: 0.520 
+         remark #15488: --- end vector cost summary ---
+         remark #25438: unrolled without remainder by 2  
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at mp0_b.c(138,2) inlined into mp0_b.c(22,2)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mp0_b.c(141,3) inlined into mp0_b.c(22,2)
+   <Peeled loop for vectorization>
+      remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(141,3) inlined into mp0_b.c(22,2)
+      remark #25045: Fused Loops: ( 141 144 )
+
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(142,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15305: vectorization support: vector length 4
+      remark #15399: vectorization support: unroll factor set to 4
+      remark #15309: vectorization support: normalized vectorization overhead 0.312
+      remark #15301: FUSED LOOP WAS VECTORIZED
+      remark #15442: entire loop may be executed in remainder
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 2 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 8 
+      remark #15477: vector cost: 2.000 
+      remark #15478: estimated potential speedup: 3.970 
+      remark #15488: --- end vector cost summary ---
+      remark #25456: Number of Array Refs Scalar Replaced In Loop: 8
+      remark #25015: Estimate of max trip count of loop=625
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(144,3) inlined into mp0_b.c(22,2)
+      remark #25046: Loop lost in Fusion 
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(141,3) inlined into mp0_b.c(22,2)
+   <Remainder loop for vectorization>
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(142,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15305: vectorization support: vector length 4
+      remark #15309: vectorization support: normalized vectorization overhead 0.625
+      remark #15301: REMAINDER LOOP WAS VECTORIZED
+      remark #25456: Number of Array Refs Scalar Replaced In Loop: 2
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(141,3) inlined into mp0_b.c(22,2)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+mp0_b.c(17,1):remark #34051: REGISTER ALLOCATION : [main] mp0_b.c:17
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   19[ rax rdx rcx rbx rsi rdi r8-r15 zmm0-zmm4]
+        
+    Routine temporaries
+        Total         :     572
+            Global    :     176
+            Local     :     396
+        Regenerable   :     187
+        Spilled       :      27
+        
+    Routine stack
+        Variables     :     164 bytes*
+            Reads     :      58 [1.95e+02 ~ 0.0%]
+            Writes    :       2 [1.86e+00 ~ 0.0%]
+        Spills        :     184 bytes*
+            Reads     :      43 [1.84e+02 ~ 0.0%]
+            Writes    :      34 [6.78e+01 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: test1(void)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (test1(void)) [2/7=28.6%] mp0_b.c(27,1)
+  -> INLINE: (34,14) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> INLINE: (38,7) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> EXTERN: (43,2) printf(const char *__restrict__, ...)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mp0_b.c(30,2)
+   remark #15520: loop was not vectorized: loop with multiple exits cannot be vectorized unless it meets search loop idiom criteria   [ mp0_b.c(162,3) ]
+   remark #25436: completely unrolled by 10  
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+mp0_b.c(27,1):remark #34051: REGISTER ALLOCATION : [test1] mp0_b.c:27
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :    6[ rax rsi rdi zmm0-zmm2]
+        
+    Routine temporaries
+        Total         :     273
+            Global    :      68
+            Local     :     205
+        Regenerable   :     106
+        Spilled       :      11
+        
+    Routine stack
+        Variables     :      32 bytes*
+            Reads     :      40 [3.71e+01 ~ 12.1%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :      88 bytes*
+            Reads     :      19 [1.77e+01 ~ 5.8%]
+            Writes    :      19 [1.76e+01 ~ 5.8%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+ 
+
+===========================================================================
+
+Begin optimization report for: test2(void)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (test2(void)) [3/7=42.9%] mp0_b.c(47,1)
+  -> EXTERN: (49,11) malloc(size_t)
+  -> EXTERN: (50,11) malloc(size_t)
+  -> EXTERN: (51,11) malloc(size_t)
+  -> EXTERN: (54,2) srand(unsigned int)
+  -> EXTERN: (54,8) time(time_t *)
+  -> EXTERN: (56,10) rand(void)
+  -> EXTERN: (57,10) rand(void)
+  -> INLINE: (62,14) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> INLINE: (66,7) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> EXTERN: (71,2) free(void *)
+  -> EXTERN: (72,2) free(void *)
+  -> EXTERN: (73,2) free(void *)
+  -> EXTERN: (75,2) printf(const char *__restrict__, ...)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mp0_b.c(55,2)
+   remark #15382: vectorization support: call to function rand(void) cannot be vectorized   [ mp0_b.c(56,10) ]
+   remark #15382: vectorization support: call to function rand(void) cannot be vectorized   [ mp0_b.c(57,10) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (56:10) and call:rand(void) (57:10)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (57:10) and call:rand(void) (56:10)
+LOOP END
+
+LOOP BEGIN at mp0_b.c(60,2)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mp0_b.c(63,3)
+   <Peeled loop for vectorization>
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(63,3)
+      remark #15388: vectorization support: reference C[i] has aligned access   [ mp0_b.c(64,4) ]
+      remark #15389: vectorization support: reference A[i] has unaligned access   [ mp0_b.c(64,11) ]
+      remark #15388: vectorization support: reference B[i] has aligned access   [ mp0_b.c(64,18) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15412: vectorization support: streaming store was generated for C[i]   [ mp0_b.c(64,4) ]
+      remark #15412: vectorization support: streaming store was generated for C[i]   [ mp0_b.c(64,4) ]
+      remark #15305: vectorization support: vector length 4
+      remark #15309: vectorization support: normalized vectorization overhead 2.429
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15442: entire loop may be executed in remainder
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 1 
+      remark #15450: unmasked unaligned unit stride loads: 1 
+      remark #15467: unmasked aligned streaming stores: 2 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 8 
+      remark #15477: vector cost: 1.750 
+      remark #15478: estimated potential speedup: 4.570 
+      remark #15488: --- end vector cost summary ---
+      remark #25015: Estimate of max trip count of loop=250000
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(63,3)
+   <Alternate Alignment Vectorized Loop>
+      remark #25015: Estimate of max trip count of loop=250000
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(63,3)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+mp0_b.c(47,1):remark #34051: REGISTER ALLOCATION : [test2] mp0_b.c:47
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   19[ rax rdx rcx rbx rbp rsi rdi r8-r10 r12-r15 zmm0-zmm4]
+        
+    Routine temporaries
+        Total         :     105
+            Global    :      36
+            Local     :      69
+        Regenerable   :      22
+        Spilled       :      10
+        
+    Routine stack
+        Variables     :      32 bytes*
+            Reads     :       4 [3.63e+01 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :      32 bytes*
+            Reads     :      13 [8.39e+01 ~ 0.0%]
+            Writes    :       5 [1.31e+01 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: test3(void)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (test3(void)) [4/7=57.1%] mp0_b.c(79,1)
+  -> EXTERN: (81,11) malloc(size_t)
+  -> INLINE: (86,14) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> INLINE: (91,7) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> EXTERN: (96,2) free(void *)
+  -> EXTERN: (98,2) printf(const char *__restrict__, ...)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mp0_b.c(84,2)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mp0_b.c(88,4)
+      remark #25444: Loopnest Interchanged: ( 1 2 ) --> ( 2 1 )
+      remark #15542: loop was not vectorized: inner loop was already vectorized   [ mp0_b.c(88,4) ]
+
+      LOOP BEGIN at mp0_b.c(87,3)
+      <Peeled loop for vectorization>
+         remark #25015: Estimate of max trip count of loop=3
+      LOOP END
+
+      LOOP BEGIN at mp0_b.c(87,3)
+         remark #15388: vectorization support: reference A[i*1024+j] has aligned access   [ mp0_b.c(89,5) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15399: vectorization support: unroll factor set to 4
+         remark #15309: vectorization support: normalized vectorization overhead 0.833
+         remark #15301: PERMUTED LOOP WAS VECTORIZED
+         remark #15442: entire loop may be executed in remainder
+         remark #15449: unmasked aligned unit stride stores: 1 
+         remark #15475: --- begin vector cost summary ---
+         remark #15476: scalar cost: 3 
+         remark #15477: vector cost: 0.750 
+         remark #15478: estimated potential speedup: 3.770 
+         remark #15488: --- end vector cost summary ---
+         remark #25015: Estimate of max trip count of loop=64
+      LOOP END
+
+      LOOP BEGIN at mp0_b.c(87,3)
+      <Remainder loop for vectorization>
+         remark #15388: vectorization support: reference A[i*1024+j] has aligned access   [ mp0_b.c(89,5) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15309: vectorization support: normalized vectorization overhead 2.000
+         remark #15301: REMAINDER LOOP WAS VECTORIZED
+      LOOP END
+
+      LOOP BEGIN at mp0_b.c(87,3)
+      <Remainder loop for vectorization>
+      LOOP END
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+mp0_b.c(79,1):remark #34051: REGISTER ALLOCATION : [test3] mp0_b.c:79
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   17[ rax rdx rcx rbx rbp rsi rdi r8-r10 r14-r15 zmm0-zmm4]
+        
+    Routine temporaries
+        Total         :      70
+            Global    :      33
+            Local     :      37
+        Regenerable   :      19
+        Spilled       :       5
+        
+    Routine stack
+        Variables     :      32 bytes*
+            Reads     :       4 [4.00e+01 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       8 bytes*
+            Reads     :       2 [1.10e+01 ~ 0.0%]
+            Writes    :       2 [1.10e+01 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: test4(void)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (test4(void)) [5/7=71.4%] mp0_b.c(102,1)
+  -> EXTERN: (104,11) malloc(size_t)
+  -> EXTERN: (105,11) malloc(size_t)
+  -> EXTERN: (108,2) srand(unsigned int)
+  -> EXTERN: (108,8) time(time_t *)
+  -> EXTERN: (111,17) rand(void)
+  -> INLINE: (115,14) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> INLINE: (120,7) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> EXTERN: (125,2) free(void *)
+  -> EXTERN: (126,2) free(void *)
+  -> EXTERN: (128,2) printf(const char *__restrict__, ...)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mp0_b.c(109,2)
+   remark #15382: vectorization support: call to function rand(void) cannot be vectorized   [ mp0_b.c(111,17) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (111:17) and call:rand(void) (111:17)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (111:17) and call:rand(void) (111:17)
+
+   LOOP BEGIN at mp0_b.c(110,3)
+      remark #15527: loop was not vectorized: function call to rand(void) cannot be vectorized   [ mp0_b.c(111,17) ]
+   LOOP END
+LOOP END
+
+LOOP BEGIN at mp0_b.c(113,2)
+   remark #15520: loop was not vectorized: loop with multiple exits cannot be vectorized unless it meets search loop idiom criteria   [ mp0_b.c(162,3) ]
+
+   LOOP BEGIN at mp0_b.c(117,4)
+      remark #25444: Loopnest Interchanged: ( 1 2 ) --> ( 2 1 )
+      remark #15389: vectorization support: reference A[i*1024+j] has unaligned access   [ mp0_b.c(118,18) ]
+      remark #15381: vectorization support: unaligned access used inside loop body   [ mp0_b.c(117,4) ]
+      remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override    [ mp0_b.c(117,4) ]
+      remark #15329: vectorization support: non-unit strided store was emulated for the variable <B[j*1024+i]>, stride is 1024   [ mp0_b.c(118,5) ]
+      remark #15305: vectorization support: vector length 4   [ mp0_b.c(117,4) ]
+      remark #15309: vectorization support: normalized vectorization overhead 0.079   [ mp0_b.c(117,4) ]
+      remark #15450: unmasked unaligned unit stride loads: 1    [ mp0_b.c(117,4) ]
+      remark #15453: unmasked strided stores: 1    [ mp0_b.c(117,4) ]
+      remark #15475: --- begin vector cost summary ---   [ mp0_b.c(117,4) ]
+      remark #15476: scalar cost: 5    [ mp0_b.c(117,4) ]
+      remark #15477: vector cost: 9.500    [ mp0_b.c(117,4) ]
+      remark #15478: estimated potential speedup: 0.520    [ mp0_b.c(117,4) ]
+      remark #15488: --- end vector cost summary ---   [ mp0_b.c(117,4) ]
+
+      LOOP BEGIN at mp0_b.c(116,3)
+         remark #15389: vectorization support: reference B[j*1024+i] has unaligned access   [ mp0_b.c(118,5) ]
+         remark #15381: vectorization support: unaligned access used inside loop body
+         remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+         remark #15328: vectorization support: non-unit strided load was emulated for the variable <A[i*1024+j]>, stride is 1024   [ mp0_b.c(118,18) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15309: vectorization support: normalized vectorization overhead 0.079
+         remark #15451: unmasked unaligned unit stride stores: 1 
+         remark #15452: unmasked strided loads: 1 
+         remark #15475: --- begin vector cost summary ---
+         remark #15476: scalar cost: 5 
+         remark #15477: vector cost: 9.500 
+         remark #15478: estimated potential speedup: 0.520 
+         remark #15488: --- end vector cost summary ---
+         remark #25438: unrolled without remainder by 2  
+      LOOP END
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+mp0_b.c(102,1):remark #34051: REGISTER ALLOCATION : [test4] mp0_b.c:102
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   19[ rax rdx rcx rbx rbp rsi rdi r8-r11 r13-r15 zmm0-zmm4]
+        
+    Routine temporaries
+        Total         :      79
+            Global    :      35
+            Local     :      44
+        Regenerable   :      22
+        Spilled       :       6
+        
+    Routine stack
+        Variables     :      32 bytes*
+            Reads     :       4 [4.00e+01 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       8 bytes*
+            Reads     :       2 [1.10e+01 ~ 0.0%]
+            Writes    :       2 [1.10e+01 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: test5(void)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (test5(void)) [6/7=85.7%] mp0_b.c(132,1)
+  -> EXTERN: (134,11) malloc(size_t)
+  -> INLINE: (140,14) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> INLINE: (147,7) get_clock(void) (isz = 15) (sz = 20)
+    -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+    -> EXTERN: (162,3) err(int, const char *, ...)
+  -> EXTERN: (152,2) free(void *)
+  -> EXTERN: (154,2) printf(const char *__restrict__, ...)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at mp0_b.c(138,2)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at mp0_b.c(141,3)
+   <Peeled loop for vectorization>
+      remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(141,3)
+      remark #25045: Fused Loops: ( 141 144 )
+
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(142,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15305: vectorization support: vector length 4
+      remark #15399: vectorization support: unroll factor set to 4
+      remark #15309: vectorization support: normalized vectorization overhead 0.312
+      remark #15301: FUSED LOOP WAS VECTORIZED
+      remark #15442: entire loop may be executed in remainder
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15449: unmasked aligned unit stride stores: 2 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 8 
+      remark #15477: vector cost: 2.000 
+      remark #15478: estimated potential speedup: 3.970 
+      remark #15488: --- end vector cost summary ---
+      remark #25456: Number of Array Refs Scalar Replaced In Loop: 8
+      remark #25015: Estimate of max trip count of loop=625
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(144,3)
+      remark #25046: Loop lost in Fusion 
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(141,3)
+   <Remainder loop for vectorization>
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(142,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15388: vectorization support: reference A[i] has aligned access   [ mp0_b.c(145,4) ]
+      remark #15305: vectorization support: vector length 4
+      remark #15309: vectorization support: normalized vectorization overhead 0.625
+      remark #15301: REMAINDER LOOP WAS VECTORIZED
+      remark #25456: Number of Array Refs Scalar Replaced In Loop: 2
+   LOOP END
+
+   LOOP BEGIN at mp0_b.c(141,3)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+mp0_b.c(132,1):remark #34051: REGISTER ALLOCATION : [test5] mp0_b.c:132
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   20[ rax rdx rcx rbx rbp rsi rdi r8-r15 zmm0-zmm4]
+        
+    Routine temporaries
+        Total         :      67
+            Global    :      31
+            Local     :      36
+        Regenerable   :      18
+        Spilled       :       9
+        
+    Routine stack
+        Variables     :      32 bytes*
+            Reads     :       4 [4.00e+01 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :      32 bytes*
+            Reads     :       5 [4.10e+01 ~ 0.0%]
+            Writes    :       4 [1.30e+01 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: get_clock(void)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (get_clock(void)) [7/7=100.0%] mp0_b.c(158,1)
+  -> EXTERN: (160,11) clock_gettime(clockid_t, struct timespec *)
+  -> EXTERN: (162,3) err(int, const char *, ...)
+
+
+    Report from: Code generation optimizations [cg]
+
+mp0_b.c(158,1):remark #34051: REGISTER ALLOCATION : [get_clock] mp0_b.c:158
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :    5[ rax rsi rdi zmm0-zmm1]
+        
+    Routine temporaries
+        Total         :      20
+            Global    :       8
+            Local     :      12
+        Regenerable   :       6
+        Spilled       :       0
+        
+    Routine stack
+        Variables     :      16 bytes*
+            Reads     :       2 [1.99e+00 ~ 6.6%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================

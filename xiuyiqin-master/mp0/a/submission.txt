@@ -1,0 +1,2 @@
+When size reach 2E23 then the time per access jump to ~15ns.
+It is because the when the size is 2E22, the cache can fetch all data for A[indirection[j]] then keep the spatial locality. But when size increase to 2E23, the STRIDE for indirection is big enough to go over cache data size. Then the cache miss ratio will increase after then. So the performance would be affected by fetching data from memory since A[indirection[j]] have oversize stride.

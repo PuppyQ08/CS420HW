@@ -1,0 +1,11 @@
+MM1:
+Time: 15.491546s
+
+MM2:
+Time: 5.754805s
+TEST PASSED
+
+MM3:
+Time: 0.000000s
+TEST FAILED at (0, 0): 0.004362 != 0.000000
+

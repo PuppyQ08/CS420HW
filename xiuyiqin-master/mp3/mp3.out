@@ -1,0 +1,51 @@
+total number is 1000
+MM1:
+Time: 0.042019s
+
+MM3:
+Send Data time: 0.200545s 
+Get Data time: 0.000665s 
+Time: 0.349607s
+TEST PASSED
+
+total number is 2000
+MM1:
+Time: 0.965959s
+
+MM3:
+Send Data time: 0.010090s 
+Get Data time: 0.001938s 
+Time: 0.647706s
+TEST PASSED
+
+total number is 4000
+MM1:
+Time: 10.822322s
+
+MM3:
+Send Data time: 0.037085s 
+Get Data time: 0.007178s 
+Time: 2.725910s
+TEST PASSED
+
+total number is 8000
+MM1:
+Time: 94.433278s
+
+MM3:
+Send Data time: 0.144888s 
+Get Data time: 0.027890s 
+Time: 12.834362s
+TEST PASSED
+
+total number is 16000
+MM1:
+Time: 835.218701s
+
+MM3:
+Send Data time: 0.575852s 
+Get Data time: 0.109820s 
+Time: 96.974610s
+TEST PASSED
+
+Application 71091463 resources: utime ~15193s, stime ~20s, Rss ~2099328, inblocks ~305, outblocks ~135

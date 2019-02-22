@@ -1,0 +1,26 @@
+----------------------------------------
+Begin Torque Prologue (Wed Oct 31 18:49:15 2018)
+Job ID:           7828876.cc-mgmt1.campuscluster.illinois.edu
+Username:         xiuyiqin
+Group:            CS420_FA18
+Job Name:         mp2
+Limits:           walltime=00:10:00,nodes=1:ppn=8,neednodes=1:ppn=8
+Job Queue:        cs
+Account:          cs-courses
+Nodes:            golub161
+End Torque Prologue
+----------------------------------------
+----------------------------------------
+Begin Torque Epilogue (Wed Oct 31 18:49:40 2018)
+Job ID:           7828876.cc-mgmt1.campuscluster.illinois.edu
+Username:         xiuyiqin
+Group:            CS420_FA18
+Job Name:         mp2
+Session:          108815
+Limits:           walltime=00:10:00,nodes=1:ppn=8,neednodes=1:ppn=8
+Resources:        cput=00:03:17,vmem=0kb,walltime=00:00:25,mem=0kb,energy_used=0
+Job Queue:        cs
+Account:          cs-courses
+Nodes:            golub161
+End Torque Epilogue
+----------------------------------------

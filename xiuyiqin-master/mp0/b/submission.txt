@@ -1,0 +1,65 @@
+There are 5 tests in this code
+--------------------------------------------------------------------------
+for test 1:
+
+-O2:
+there was not vectorization for the loop to repeat r times. It is because
+getclock() has a if condition inside as an exit. Vectorization can only have
+one entry one exit. Level 2 optimazation would make the code run faster
+generally. 
+
+-O3:
+It has loop unrolling by 10 at line 30, which would make code slower because
+register are limited camparing to 10 runs so the code needs to wait register
+until available.
+
+--------------------------------------------------------------------------
+for test 2:
+
+-O2:
+vector dependence prevent vectorization for line55 it assumed line57 and line
+56 have output dependence of rand(),since rand() run at same time will have same result. But that one doesn't count for the total running time. 
+For line 60 loop, it have no vectorization same reason as test1.
+For line 63, it has vectorization. That is where we save time by use
+vectors.Also it has aligned access to array data, which make memory data
+fetching faster.
+-O3:
+Nothing speacial for this level but the general quicker running make the time shorter.
+--------------------------------------------------------------------------
+for test 3:
+
+-O2:
+outer loop at 84 was not vectorized. For loop at line 88, the compiler
+do a loop interchange, since inner loop is to iterate j, but each j will have
+j*N as a stride in array. So it interchange i and j then it would have more
+spatial locality, which would make the code faster. Also loop at line 87 has
+been vectorized. From the report, line 87 A[i*N+j] has aligned access and is
+unrolled by 4
+
+-O3:
+Nothing special so the time for this level almost the same as level 2.
+
+--------------------------------------------------------------------------
+for test 4:
+
+-O2:
+It didn't use vectorization in first loop due to rand() function. For loop at
+line 117 it used loop interchange but its effect is not too big since A and
+B's index is interchanging to each other. But it used loop unrolling by 2,
+which would make it faster. Therefore for 2 level optimization, test 4 didn't
+boost too much compared to test 3.Also vecterization for line 116 is
+inefficient so it wasn't vecterized.
+
+-O3:
+nothing more but faster a little bit.
+--------------------------------------------------------------------------
+For test 5:
+
+-O2:
+For loop at 141 and 144, the compiler vectorize them and unrolled by 4 seperately, which will
+make the loop faster. And A[i] has aligned access also.
+
+-O3:
+Two loop was fused together,which makes the code faster. The level 2 need to run loop twice but level 3 just need loop once.
+
+

@@ -1,0 +1,74 @@
+1.
+When I implement the code on GPU, the results are flowing:
+total number is 1000
+MM1: Time: 0.042079s
+MM2: Time: 0.343538s
+speedup:0.1225
+
+total number is 2000
+MM1:Time: 0.971348s
+MM2:Time: 0.647488s
+speedup:1.5002
+
+total number is 4000
+MM1:Time: 10.842416s
+MM2:Time: 2.722039s
+speedup:3.9832
+
+total number is 8000
+MM1:Time: 94.458796s
+MM2:Time: 12.766806s
+speedup:7.3988
+
+total number is 16000
+MM1:Time: 952.338736s
+MM2:Time: 96.693860s
+speedup:9.8490
+
+As we can see, when size of matrix is 1000 then GPU time is longer than CPU. 
+As size increasing, the times of GPU increase slower than CPU time.
+That results in the speedups are not same but increase as size number.
+The reason for this change is when we use GPU we need to transfer data, which would take some time.
+When the size is small (~1000), the GPU boosted calculation time very little but it takes more time to transfer data. However, when the size is big enough(>2000), then the calculation time GPU had saved is quite a big deal compared to data transfering time. So for large size, GPU would cost less time in total compared to CPU.
+
+2.
+To calculate the bandwidth of transferring data, first we got the data amount of one matrix : size is tN and each element is a flaot which is 4 bytes. Also, we send 3 matrixes A,B,C and receive 1 matrix A.
+The data move/compute time ratio is just time(data moving)/time(data computing).
+So the ratio and  bandwidth is listed following:
+
+total number is 1000
+MM1:Time: 0.042019s
+MM3:Time: 0.349607s
+Send Data time: 0.200545s bandwidth:~28MB/s
+Get Data time: 0.000665s bandwidth:~2.8GB/s 
+data move/compute ratio:1.3559 
+
+total number is 2000
+MM1:Time: 0.965959s
+MM3:Time: 0.647706s
+Send Data time: 0.010090s bandwidth:~2.2GB/s 
+Get Data time: 0.001938s bandwidth:~3.8GB/s 
+data move/compute ratio:0.0189 
+
+total number is 4000
+MM1:Time: 10.822322s
+MM3:Time: 2.725910s
+Send Data time: 0.037085s bandwidth:~2.4GB/s 
+Get Data time: 0.007178s bandwidth:~4.2GB/s 
+data move/compute ratio:0.0165
+
+total number is 8000
+MM1:Time: 94.433278s
+MM3:Time: 12.834362s
+Send Data time: 0.144888s bandwidth:~2.5GB/s 
+Get Data time: 0.027890s bandwidth:~4.2GB/s 
+data move/compute ratio:0.0136 
+
+total number is 16000
+MM1:Time: 835.218701s
+MM3:Time: 96.974610s
+Send Data time: 0.575852s bandwidth:~2.5GB/s 
+Get Data time: 0.109820s bandwidth:~4.3GB/s 
+data move/compute ratio:0.0071 
+
+In short, the turning point from CPU to GPU according to the entire time includin both transfering and computing time is between 1000 and 2000. So when the size is larger than 2000 then we definitely want to move our computation to GPU.

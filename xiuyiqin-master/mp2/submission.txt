@@ -1,0 +1,61 @@
+MP2 CS420 Name : Xiuyi Qin
+Part1:
+For speedup with diffrent nodes, we can see that:
+N = 3000 ( comparable to mp1)
+for mm1 the serial codes 4,8,16 processes all take similar time which is around 5.5 sec.
+While for mm2 using MPI, the time is 3.26,1.95, 1.08s for 4,8,16 processes.
+So the speedups are 1.69, 2.88, 5.18. As we can see the speedup is not perfect as linear increasing as processes' number going up. Probably it is due to the overhead of more processes.
+
+Comparing to MP1, the time for openmp for N = 3000 is around 0.40s for 16 threads. It is faster than MPI but not too much. 
+
+------------------------------------------------------------
+Part2:
+For number of elements for 8 process are as following:
+for process 0 we have elements of 2001000
+for process 1 we have elements of 1172940
+for process 2 we have elements of 986230
+for process 3 we have elements of 878555
+for process 4 we have elements of 807765
+for process 5 we have elements of 758305
+for process 6 we have elements of 712430
+for process 7 we have elements of 684775
+
+
+In mm3: for process 0 we have rows of 2000
+In mm3: for process 1 we have rows of 519
+In mm3: for process 2 we have rows of 365
+In mm3: for process 3 we have rows of 290
+In mm3: for process 4 we have rows of 245
+In mm3: for process 5 we have rows of 215
+In mm3: for process 6 we have rows of 191
+In mm3: for process 7 we have rows of 175
+
+Compare to mm2 the navie version:
+Well obviously the rows for naive one is 500 for each process
+
+for process 0 we have elements of 125250
+for process 1 we have elements of 375250
+for process 2 we have elements of 625250
+for process 3 we have elements of 875250
+for process 4 we have elements of 1125250
+for process 5 we have elements of 1375250
+for process 6 we have elements of 1625250
+for process 7 we have elements of 1875250
+
+
+So the loading number for Openmp is statically 2 for each threads.
+Loading number for MPI_f1 is 500 for each while the number of elements are different (increasing).
+Loading number for MPI_f2 is decreasing and the number also decreasing.
+But good for f2 is its difference between elements number is not that big as f1. So it could have better spatial locality.
+
+As for openmp and MPI:
+Openmp is to program on shared memory devices. This means parallelism occurs where every thread has access to all data. 
+MPI is to program on distributed memory devices. So each process has its own memory space.
+For this dense matrix multiplication. We need to use MPI to transport data from each other process.
+And for the loop inside we could use openmp to split loops.
+If we combine MPI and Openmp together we could see the result would be a little bit faster.
+
+For the bonus question:
+Why would f2 better: We could see from the row and elements patrition from above. f2 would give more evenly elements number for each process.
+
+

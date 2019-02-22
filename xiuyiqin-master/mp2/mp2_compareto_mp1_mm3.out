@@ -1,0 +1,27 @@
+MM1:
+Time: 5.636118s
+
+MM2:
+for process 3 we have rows of 310202
+Time: 1.096710s
+for process 1 we have rows of 417105
+for process 2 we have rows of 349153
+for process 4 we have rows of 286525
+for process 5 we have rows of 268736
+for process 7 we have rows of 242268
+for process 8 we have rows of 230755
+for process 11 we have rows of 209547
+for process 13 we have rows of 198415
+for process 6 we have rows of 253137
+for process 10 we have rows of 216298
+for process 14 we have rows of 194501
+for process 15 we have rows of 189984
+for process 9 we have rows of 221804
+for process 12 we have rows of 204425
+TEST PASSED
+
+MM3:
+for process 0 we have rows of 708645
+Time: 0.433037s
+TEST PASSED
+

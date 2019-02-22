@@ -1,0 +1,31 @@
+Time at 0: 0.0000000000s
+Time at 1: 0.0000001187s
+Time at 2: 0.0000001886s
+Time at 3: 0.0000002328s
+Time at 4: 0.0000002757s
+Time at 5: 0.0000003190s
+Time at 6: 0.0000003609s
+Time at 7: 0.0000004047s
+Time at 8: 0.0000004466s
+Time at 9: 0.0000004889s
+Time for size 64: 0.522115s. Per access: 3.890061ns
+Time for size 128: 0.502214s. Per access: 3.741783ns
+Time for size 256: 0.493958s. Per access: 3.680274ns
+Time for size 512: 0.489031s. Per access: 3.643562ns
+Time for size 1024: 0.487553s. Per access: 3.632556ns
+Time for size 2048: 0.485695s. Per access: 3.618708ns
+Time for size 4096: 0.484488s. Per access: 3.609715ns
+Time for size 8192: 0.489627s. Per access: 3.648008ns
+Time for size 16384: 0.501335s. Per access: 3.735238ns
+Time for size 32768: 0.517760s. Per access: 3.857616ns
+Time for size 65536: 0.631494s. Per access: 4.704998ns
+Time for size 131072: 0.670151s. Per access: 4.993013ns
+Time for size 262144: 0.672430s. Per access: 5.009991ns
+Time for size 524288: 0.690396s. Per access: 5.143854ns
+Time for size 1048576: 0.676719s. Per access: 5.041946ns
+Time for size 2097152: 0.697544s. Per access: 5.197111ns
+Time for size 4194304: 0.757708s. Per access: 5.645368ns
+Time for size 8388608: 2.088457s. Per access: 15.560216ns
+Time for size 16777216: 2.172424s. Per access: 16.185819ns
+Time for size 33554432: 2.185733s. Per access: 16.284977ns
+Time for size 67108864: 2.253128s. Per access: 16.787111ns

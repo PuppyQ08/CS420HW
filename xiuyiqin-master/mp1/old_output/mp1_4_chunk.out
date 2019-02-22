@@ -1,0 +1,26 @@
+MM1:
+PAPI event 0: 639382212
+PAPI event 1: 4347231523
+Time: 7.196739s
+
+MM2:
+PAPI event 0: 640543157
+PAPI event 1: 4344445384
+Time: 2.237669s
+TEST PASSED
+
+MM3:
+PAPI event 0: 140466059
+PAPI event 1: 4510103945
+Time: 4.337557s
+TEST PASSED
+
+MM4:
+The number of thread: 2 
+The number of thread: 1 
+The number of thread: 0 
+PAPI event 0: 145963058
+PAPI event 1: 4505728487
+Time: 1.498106s
+TEST PASSED
+

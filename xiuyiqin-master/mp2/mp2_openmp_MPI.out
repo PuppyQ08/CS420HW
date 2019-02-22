@@ -1,0 +1,27 @@
+In mm2 : for process 3 we have rows of 500
+In mm2 : for process 7 we have rows of 500
+In mm2 : for process 1 we have rows of 500
+In mm2 : for process 2 we have rows of 500
+In mm2 : for process 4 we have rows of 500
+In mm2 : for process 5 we have rows of 500
+In mm2 : for process 6 we have rows of 500
+MM1:
+Time: 15.472650s
+
+MM2:
+In mm2 : for process 0 we have rows of 500
+Time: 5.751163s
+In mm3: for process 1 we have rows of 519
+In mm3: for process 7 we have rows of 175
+In mm3: for process 4 we have rows of 245
+In mm3: for process 6 we have rows of 191
+In mm3: for process 5 we have rows of 215
+In mm3: for process 2 we have rows of 365
+In mm3: for process 3 we have rows of 290
+TEST PASSED
+
+MM3:
+In mm3: for process 0 we have rows of 2000
+Time: 2.877907s
+TEST PASSED
+

@@ -1,0 +1,41 @@
+total number is 1000
+MM1:
+Time: 0.042079s
+
+MM2:
+Time: 0.343538s
+TEST PASSED
+
+total number is 2000
+MM1:
+Time: 0.971348s
+
+MM2:
+Time: 0.647488s
+TEST PASSED
+
+total number is 4000
+MM1:
+Time: 10.842416s
+
+MM2:
+Time: 2.722039s
+TEST PASSED
+
+total number is 8000
+MM1:
+Time: 94.458796s
+
+MM2:
+Time: 12.766806s
+TEST PASSED
+
+total number is 16000
+MM1:
+Time: 952.338736s
+
+MM2:
+Time: 96.693860s
+TEST PASSED
+
+Application 71051840 resources: utime ~17067s, stime ~20s, Rss ~2099332, inblocks ~300, outblocks ~95

@@ -1,0 +1,16 @@
+----------------------------------------
+Begin Torque Prologue on nid27561
+at Sun Dec  2 16:37:10 CST 2018
+Job Id:			9312613.bw
+Username:		tra600
+Group:			TRAIN_bavq
+Job name:		mp3
+Requested resources:	walltime=00:50:00,nodes=1:ppn=16:xk,neednodes=1:ppn=16:xk
+Queue:			normal
+Account:		bavq
+End Torque Prologue:  0.122 elapsed
+----------------------------------------
+
+
+
+
