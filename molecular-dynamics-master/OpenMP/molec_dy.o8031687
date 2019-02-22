@@ -1,0 +1,27 @@
+----------------------------------------
+Begin Torque Prologue (Thu Jan  3 19:32:01 2019)
+Job ID:           8031687.cc-mgmt1.campuscluster.illinois.edu
+Username:         xiuyiqin
+Group:            CS420_FA18
+Job Name:         molec_dy
+Limits:           walltime=01:00:00,nodes=1:ppn=16,neednodes=1:ppn=16
+Job Queue:        cs
+Account:          cs-courses
+Nodes:            golub161
+End Torque Prologue
+----------------------------------------
+/var/spool/torque/mom_priv/jobs/8031687.cc-mgmt1.campuscluster.illinois.edu.SC: line 25: ./md: No such file or directory
+----------------------------------------
+Begin Torque Epilogue (Thu Jan  3 19:35:20 2019)
+Job ID:           8031687.cc-mgmt1.campuscluster.illinois.edu
+Username:         xiuyiqin
+Group:            CS420_FA18
+Job Name:         molec_dy
+Session:          28010
+Limits:           walltime=01:00:00,nodes=1:ppn=16,neednodes=1:ppn=16
+Resources:        cput=00:26:03,vmem=550060kb,walltime=00:04:08,mem=10916kb,energy_used=0
+Job Queue:        cs
+Account:          cs-courses
+Nodes:            golub161
+End Torque Epilogue
+----------------------------------------

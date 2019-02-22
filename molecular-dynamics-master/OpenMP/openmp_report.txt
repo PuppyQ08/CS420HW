@@ -1,0 +1,62 @@
+ 
+Sequential:
+unit: sec
+308.097 
+304.901
+309.126
+305.047
+309.379
+
+Avg: 307.31  std: 2.1864
+
+Test 1: 4 threads, 160000 atoms 128^3
+unit: sec
+76.9488
+78.2809
+76.8299
+78.2478
+76.9655
+
+Avg: 77.45458  std: 0.7411
+Speedup: 3.9676
+
+Test 2: 8 threads 16000 atoms 128^3 
+unit: sec
+39.4189
+39.8951
+39.2331
+39.9419
+38.8113
+
+Avg: 39.46006 std:0.47316
+Speedup: 7.787874
+
+Test 3: 16 threads 16000 atoms 128^3 
+24.2101
+25.7484
+24.177
+31.6769
+30.1301
+
+Avg: 27.1885 std:3.4933
+Speedup: 11.306
+
+Test 4: 8 threads schedule(static) 
+Avg: 32.28 std: 3.609
+
+Test 5: 8 threads schedule(dynamic)
+20.9389
+21.712
+20.2243
+21.1483
+21.2954
+
+Avg: 21.0631 std:0.5480
+Speedup:14.5899
+
+
+Test 6: GPU (target simd) 8 threads
+
+Avg:8.411254 sec std: 0.0875
+Speedup: 36.535
+

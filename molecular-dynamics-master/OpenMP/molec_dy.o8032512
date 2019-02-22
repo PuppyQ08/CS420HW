@@ -1,0 +1,29 @@
+----------------------------------------
+Begin Torque Prologue (Thu Jan  3 20:28:42 2019)
+Job ID:           8032512.cc-mgmt1.campuscluster.illinois.edu
+Username:         xiuyiqin
+Group:            CS420_FA18
+Job Name:         molec_dy
+Limits:           walltime=01:00:00,nodes=1:ppn=16,neednodes=1:ppn=16
+Job Queue:        cs
+Account:          cs-courses
+Nodes:            golub161
+End Torque Prologue
+----------------------------------------
+/var/spool/torque/mom_priv/jobs/8032512.cc-mgmt1.campuscluster.illinois.edu.SC: line 23: export: `8': not a valid identifier
+OMP: Warning #227: OMP_NUM_THREADS: Invalid symbols found. Check the value "".
+/var/spool/torque/mom_priv/jobs/8032512.cc-mgmt1.campuscluster.illinois.edu.SC: line 25: ./md: No such file or directory
+----------------------------------------
+Begin Torque Epilogue (Thu Jan  3 20:31:25 2019)
+Job ID:           8032512.cc-mgmt1.campuscluster.illinois.edu
+Username:         xiuyiqin
+Group:            CS420_FA18
+Job Name:         molec_dy
+Session:          37301
+Limits:           walltime=01:00:00,nodes=1:ppn=16,neednodes=1:ppn=16
+Resources:        cput=00:39:39,vmem=1107196kb,walltime=00:03:13,mem=13376kb,energy_used=0
+Job Queue:        cs
+Account:          cs-courses
+Nodes:            golub161
+End Torque Epilogue
+----------------------------------------
