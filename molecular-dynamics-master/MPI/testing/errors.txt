@@ -1,0 +1,75 @@
+[aidan-Latitude-E6510:18014] *** Process received signal ***
+[aidan-Latitude-E6510:18020] *** Process received signal ***
+[aidan-Latitude-E6510:18020] Signal: Segmentation fault (11)
+[aidan-Latitude-E6510:18020] Signal code: Address not mapped (1)
+[aidan-Latitude-E6510:18020] Failing at address: 0x7f14352698a0
+[aidan-Latitude-E6510:18020] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x3ef20)[0x7f1446eedf20]
+[aidan-Latitude-E6510:18020] [ 1] md_test(+0xd03e)[0x5650f5e0603e]
+[aidan-Latitude-E6510:18020] [ 2] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7f1446ed0b97]
+[aidan-Latitude-E6510:18020] [ 3] md_test(+0xe3ba)[0x5650f5e073ba]
+[aidan-Latitude-E6510:18020] *** End of error message ***
+[aidan-Latitude-E6510:18014] Signal: Segmentation fault (11)
+[aidan-Latitude-E6510:18014] Signal code: Address not mapped (1)
+[aidan-Latitude-E6510:18014] Failing at address: 0x7f5485a897b0
+[aidan-Latitude-E6510:18014] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x3ef20)[0x7f54976edf20]
+[aidan-Latitude-E6510:18014] [ 1] md_test(+0xd03e)[0x55cbecdb303e]
+[aidan-Latitude-E6510:18014] [ 2] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7f54976d0b97]
+[aidan-Latitude-E6510:18014] [ 3] md_test(+0xe3ba)[0x55cbecdb43ba]
+[aidan-Latitude-E6510:18014] *** End of error message ***
+[aidan-Latitude-E6510:18013] *** Process received signal ***
+[aidan-Latitude-E6510:18028] *** Process received signal ***
+[aidan-Latitude-E6510:18028] Signal: Segmentation fault (11)
+[aidan-Latitude-E6510:18028] Signal code: Address not mapped (1)
+[aidan-Latitude-E6510:18028] Failing at address: 0x7ffa36310960
+[aidan-Latitude-E6510:18028] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x3ef20)[0x7ffa47f2af20]
+[aidan-Latitude-E6510:18028] [ 1] md_test([aidan-Latitude-E6510:18023] *** Process received signal ***
+[aidan-Latitude-E6510:18023] Signal: Segmentation fault (11)
+[aidan-Latitude-E6510:18023] Signal code: Address not mapped (1)
+[aidan-Latitude-E6510:18023] Failing at address: 0x7efeac0ca8d0
++0x[aidan-Latitude-E6510:18023] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x3ef20)[0x7efeaf141f20]
+[aidan-Latitude-E6510:18023] [ 1] md_test(+0xcd98)[0x5628d9e40d98]
+[aidan-Latitude-E6510:18023] [ 2] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7efeaf124b97]
+[aidan-Latitude-E6510:18023] [ 3] md_test(+0xe3ba)[0x5628d9e423ba]
+[aidan-Latitude-E6510:18023] *** End of error message ***
+d156)[0x560e2b24a156]
+[aidan-Latitude-E6510:18028] [ 2] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7ffa47f0db97]
+[aidan-Latitude-E6510:18028] [ 3] md_test(+0xe3ba)[0x560e2b24b3ba]
+[aidan-Latitude-E6510:18028] *** End of error message ***
+[aidan-Latitude-E6510:18013] Signal: Segmentation fault (11)
+[aidan-Latitude-E6510:18013] Signal code: Address not mapped (1)
+[aidan-Latitude-E6510:18013] Failing at address: 0x7fd0489dc2d0
+[aidan-Latitude-E6510:18013] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x3ef20)[0x7fd05656ef20]
+[aidan-Latitude-E6510:18013] [ 1] md_test(+0xcd98)[0x55ba9e5bad98]
+[aidan-Latitude-E6510:18013] [ 2] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7fd056551b97]
+[aidan-Latitude-E6510:18013] [ 3] md_test(+0xe3ba)[0x55ba9e5bc3ba]
+[aidan-Latitude-E6510:18013] *** End of error message ***
+[aidan-Latitude-E6510:18011] *** Process received signal ***
+[aidan-Latitude-E6510:18011] Signal: Segmentation fault (11)
+[aidan-Latitude-E6510:18011] Signal code: Address not mapped (1)
+[aidan-Latitude-E6510:18011] Failing at address: 0x7fe1ba0b4960
+[aidan-Latitude-E6510:18011] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x3ef20)[0x7fe1d3cf9f20]
+[aidan-Latitude-E6510:18011] [ 1] md_test(+0xd156)[0x55705884a156]
+[aidan-Latitude-E6510:18011] [ 2] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7fe1d3cdcb97]
+[aidan-Latitude-E6510:18011] [ 3] md_test(+0xe3ba)[0x55705884b3ba]
+[aidan-Latitude-E6510:18011] *** End of error message ***
+[aidan-Latitude-E6510:18015] *** Process received signal ***
+[aidan-Latitude-E6510:18015] Signal: Segmentation fault (11)
+[aidan-Latitude-E6510:18015] Signal code: Address not mapped (1)
+[aidan-Latitude-E6510:18015] Failing at address: 0x7f55b00a1d60
+[aidan-Latitude-E6510:18015] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x3ef20)[0x7f55bd6ecf20]
+[aidan-Latitude-E6510:18015] [ 1] md_test(+0xd03e)[0x555e3c27d03e]
+[aidan-Latitude-E6510:18015] [ 2] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7f55bd6cfb97]
+[aidan-Latitude-E6510:18015] [ 3] md_test(+0xe3ba)[0x555e3c27e3ba]
+[aidan-Latitude-E6510:18015] *** End of error message ***
+[aidan-Latitude-E6510:18012] *** Process received signal ***
+[aidan-Latitude-E6510:18012] Signal: Segmentation fault (11)
+[aidan-Latitude-E6510:18012] Signal code: Address not mapped (1)
+[aidan-Latitude-E6510:18012] Failing at address: 0x7fe3dc12c060
+[aidan-Latitude-E6510:18012] [ 0] /lib/x86_64-linux-gnu/libc.so.6(+0x3ef20)[0x7fe3e9d74f20]
+[aidan-Latitude-E6510:18012] [ 1] md_test(+0xd03e)[0x56204502403e]
+[aidan-Latitude-E6510:18012] [ 2] /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7fe3e9d57b97]
+[aidan-Latitude-E6510:18012] [ 3] md_test(+0xe3ba)[0x5620450253ba]
+[aidan-Latitude-E6510:18012] *** End of error message ***
+--------------------------------------------------------------------------
+mpirun noticed that process rank 3 with PID 0 on node aidan-Latitude-E6510 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------

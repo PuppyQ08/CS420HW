@@ -1,0 +1,12 @@
+#!/bin/bash
+#PBS -l walltime=00:30:00
+#PBS -l nodes=1:ppn=8
+#PBS -N MD_MPI
+#PBS -j oe
+#PBS -q cs
+
+module load intel/18.0
+
+cd $PBS_O_WORKDIR
+
+mpirun -np 8  ./dmpi > md_mpi1.out
