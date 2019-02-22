@@ -1,0 +1,14 @@
+#!/bin/bash
+#PBS -l walltime=00:50:00
+#PBS -l nodes=1:ppn=16:xk
+#PBS -N md 
+#PBS -j oe
+
+module unload PrgEnv-cray
+module load PrgEnv/cray-18_06-cuda-9.1
+module load craype-accel-nvidia35
+
+cd $PBS_O_WORKDIR
+
+export OMP_NUM_THREADS=8
+aprun -n 1 -d $OMP_NUM_THREADS ./gpu > mdgpu.out

@@ -1,0 +1,17 @@
+----------------------------------------
+Begin Torque Prologue on nid25257
+at Thu Jan  3 22:27:58 CST 2019
+Job Id:			9478384.bw
+Username:		tra600
+Group:			TRAIN_bavq
+Job name:		md
+Requested resources:	walltime=00:50:00,nodes=1:ppn=16:xk,neednodes=1:ppn=16:xk
+Queue:			normal
+Account:		bavq
+End Torque Prologue:  0.123 elapsed
+----------------------------------------
+
+
+
+
+./gpu: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.18' not found (required by ./gpu)

@@ -1,0 +1,21 @@
+----------------------------------------
+Begin Torque Prologue on nid25257
+at Fri Jan  4 11:31:15 CST 2019
+Job Id:			9480000.bw
+Username:		tra600
+Group:			TRAIN_bavq
+Job name:		md
+Requested resources:	walltime=00:50:00,nodes=1:ppn=16:xk,neednodes=1:ppn=16:xk
+Queue:			normal
+Account:		bavq
+End Torque Prologue:  0.116 elapsed
+----------------------------------------
+
+
+
+
+./gpu: /usr/lib64/libgomp.so.1: version `GOMP_4.5' not found (required by ./gpu)
+./gpu: /usr/lib64/libgomp.so.1: version `OMP_4.0' not found (required by ./gpu)
+./gpu: /usr/lib64/libgomp.so.1: version `GOMP_4.0' not found (required by ./gpu)
+./gpu: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.18' not found (required by ./gpu)
+./gpu: /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.21' not found (required by ./gpu)

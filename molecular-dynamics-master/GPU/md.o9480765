@@ -1,0 +1,16 @@
+----------------------------------------
+Begin Torque Prologue on nid25331
+at Fri Jan  4 13:26:51 CST 2019
+Job Id:			9480765.bw
+Username:		tra600
+Group:			TRAIN_bavq
+Job name:		md
+Requested resources:	walltime=00:50:00,nodes=1:ppn=16:xk,neednodes=1:ppn=16:xk
+Queue:			normal
+Account:		bavq
+End Torque Prologue:  0.124 elapsed
+----------------------------------------
+
+
+
+

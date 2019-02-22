@@ -1,0 +1,1216 @@
+      .version 3.1
+      .target sm_35
+      .address_size 64
+
+      // Cray C++ : Version 8.7.1
+
+      .file	1	"gpumd.cpp"
+
+      .entry main$ck_L101_1(
+               .param .s64 $$arg_ptr_acc_total_kinetic_energy_T71_T275,
+               .param .s64 $$arg_ptr_acc_speed_sum_T73_T276,
+               .param .s64 $$arg_ptr_acc_accelerations_T75_T277,
+               .param .s64 $$arg_ptr_acc_velocities_T77_T278,
+               .param .s64 $$arg_ptr_acc_positions_T79_T279,
+               .param .s64 $$arg_ptr_acc_universe_size_T81_T280,
+               .param .s64 $$arg_ptr_acc_t_step_T83_T281,
+               .param .s64 $$arg_ptr_acc_k_T87_T282,
+               .param .s64 $$arg_ptr_acc_j_T89_T283,
+               .param .s64 $$arg_ptr_acc_cfe_static_2709_T93_T284,
+               .param .s64 $$arg_ptr_reduc_ctl_T121_T285,
+               .param .s64 $$arg_ptr_reduc_val_T125_T287,
+               .param .s64 $$arg_ptr_reduc_ctl_T130_T288,
+               .param .s64 $$arg_ptr_reduc_val_T134_T290 )
+      {
+      .local .u64 $_pvt2_prev_acceleration_T39__f1s360[3];
+      .local .u64 $_pvt2_force_T40__f1s361[3];
+      .local .u64 $_TA_squared_dist_18__f1s637[264];
+      .local .u64 $_TA_cfe_19__f1s638[264];
+      .local .u64 $_TA_x_20__f1s639[264];
+      .local .u64 $_TA_k_21__f1s640[264];
+      .local .u64 $_TA_SCF_22__f1s641[264];
+      .local .u64 $_TA_SCF_23__f1s642[264];
+      .local .u64 $_TA_CND_SPLT_24__f1s643[264];
+      .shared .s32 reduc_share_ctl_C2__f1s663;
+      .shared .s32 reduc_share_ctl_C2__f1s675;
+      .shared .u64 $$_redfold_T194__f1s1166[128];
+      //
+      .reg .pred %p<54>;
+      .reg .b32  %b<5>;
+      .reg .b64  %bd<58>;
+      .reg .s32  %s<51>;
+      .reg .s64  %sd<300>;
+      .reg .u32  %u<20>;
+      .reg .u64  %ud<15>;
+      .reg .f64  %fd<250>;
+      //
+      .loc                 1  101  0
+      .loc                 1  101  0
+      mov.f64              %fd22, 0d0000000000000000;  // gpumd.cpp:101 : $_pvt2_speed_sum_T49
+      mov.f64              %fd20, 0d0000000000000000;  // gpumd.cpp:101 : $_pvt2_total_kinetic_energy_T48
+      mov.f64              %fd17, 0d0000000000000000;  // gpumd.cpp:101 : $_pvt2_speed_sum_T47
+      mov.f64              %fd18, 0d0000000000000000;  // gpumd.cpp:101 : $_pvt2_total_kinetic_energy_T46
+      mov.u32              %u8, %nctaid.x;             // gpumd.cpp:101
+      mov.u32              %u4, %nctaid.x;             // gpumd.cpp:101 : $$GVN_161_T214
+      mov.u32              %u9, %ntid.x;               // gpumd.cpp:101
+      mov.u32              %u5, %ntid.x;               // gpumd.cpp:101 : $$GVN_162_T215
+      mul.lo.u32           %s2, %u8, %u9;              // gpumd.cpp:101 : $$numthrds_T119
+      mov.u32              %u10, %ctaid.x;             // gpumd.cpp:101
+      mov.u32              %u2, %ctaid.x;              // gpumd.cpp:101 : $$GVN_159_T212
+      mov.u32              %u11, %tid.x;               // gpumd.cpp:101
+      mov.u32              %u1, %tid.x;                // gpumd.cpp:101 : $$GVN_160_T213
+      mad.lo.u32           %s4, %u10, %u9, %u11;       // gpumd.cpp:101 : $$I_i_44_T149
+      mov.s32              %s1, %s4;                   // gpumd.cpp:101 : $$id_T120
+      setp.ge.s32          %p1, %s4, 16000;            // gpumd.cpp:101
+      @%p1 bra             $main$ck_L101_1__l358__;    // gpumd.cpp:101
+      .loc                 1  108  0
+      mul.lo.s32           %s3, %s1, 3;                // gpumd.cpp:108 : $$SR_E8_T164
+      mul.lo.s32           %s12, %s2, 3;               // gpumd.cpp:108 : $$LIS_numthrds_94_T170
+$main$ck_L101_1__l269__:
+      .loc                 1  103  0
+      ld.param.s64         %sd12, [$$arg_ptr_acc_cfe_static_2709_T93_T284];// gpumd.cpp:103 : $$arg_ptr_acc_cfe_static_2709_T93_T284
+      ld.global.nc.f64     %fd29, [%sd12];             // gpumd.cpp:103 : 0[$$arg_ptr_acc_cfe_static_2709_T93_T284,0,ex].L
+      mov.s64              %sd13, $_pvt2_force_T40__f1s361;// gpumd.cpp:103
+      .loc                 1  108  0
+      cvt.s64.s32          %sd14, %s3;                 // gpumd.cpp:108
+      shl.b64              %bd1, %sd14, 3;             // gpumd.cpp:108
+      .loc                 1  109  0
+      mov.s64              %sd15, $_pvt2_prev_acceleration_T39__f1s360;// gpumd.cpp:109
+      .loc                 1  103  0
+      st.local.f64         [%sd13], %fd29;             // gpumd.cpp:103 : $_pvt2_force_T40[0].L
+      .loc                 1  108  0
+      ld.param.s64         %sd16, [$$arg_ptr_acc_t_step_T83_T281];// gpumd.cpp:108 : $$arg_ptr_acc_t_step_T83_T281
+      ld.global.nc.f64     %fd30, [%sd16];             // gpumd.cpp:108 : 0[$$arg_ptr_acc_t_step_T83_T281,0,ex].L
+      ld.param.s64         %sd17, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:108 : $$arg_ptr_acc_velocities_T77_T278
+      ld.param.s64         %sd18, [$$arg_ptr_acc_accelerations_T75_T277];// gpumd.cpp:108 : $$arg_ptr_acc_accelerations_T75_T277
+      ld.param.s64         %sd19, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:108 : $$arg_ptr_acc_positions_T79_T279
+      mov.f64              %fd5, %fd30;                // gpumd.cpp:108 : $$GVN_t_step_202_T255
+      mul.rn.f64           %fd4, %fd30, %fd30;         // gpumd.cpp:108 : $$GVN_180_T233
+      add.s64              %sd20, %sd17, %bd1;         // gpumd.cpp:108
+      ld.global.f64        %fd2, [%sd20];              // gpumd.cpp:108 : $$GVN_velocities_191_T244
+      add.s64              %sd21, %sd18, %bd1;         // gpumd.cpp:108
+      ld.global.f64        %fd31, [%sd21];             // gpumd.cpp:108 : 0[$$arg_ptr_acc_accelerations_T75_T277,$$SR_E8_T164].L
+      mul.rn.f64           %fd32, %fd4, %fd31;         // gpumd.cpp:108
+      add.s64              %sd22, %sd19, %bd1;         // gpumd.cpp:108
+      ld.global.f64        %fd33, [%sd22];             // gpumd.cpp:108 : 0[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      mad.rn.f64           %fd34, %fd2, %fd30, %fd33;  // gpumd.cpp:108
+      mad.rn.f64           %fd35, 0d3fe0000000000000, %fd32, %fd34;// gpumd.cpp:108
+      st.global.f64        [%sd22], %fd35;             // gpumd.cpp:108 : 0[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      .loc                 1  109  0
+      st.local.f64         [%sd15], %fd31;             // gpumd.cpp:109 : $_pvt2_prev_acceleration_T39[0].L
+      .loc                 1  108  0
+      mov.f64              %fd1, %fd35;                // gpumd.cpp:108 : $acc_positions_T80_WR0_S170
+      .loc                 1  112  0
+      setp.ge.f64          %p2, %fd35, 0d0000000000000000;// gpumd.cpp:112
+      @%p2 bra             $main$ck_L101_1__l277__;    // gpumd.cpp:112
+      .loc                 1  114  0
+      setp.ge.f64          %p3, %fd1, 0dc040000000000000;// gpumd.cpp:114
+      @%p3 bra             $main$ck_L101_1__l275__;    // gpumd.cpp:114
+      .loc                 1  115  0
+      mov.f64              %fd1, 0d4040000000000000;   // gpumd.cpp:115 : $acc_positions_T80_WR0_S170
+      cvt.s64.s32          %sd23, %s3;                 // gpumd.cpp:115
+      shl.b64              %bd2, %sd23, 3;             // gpumd.cpp:115
+      ld.param.s64         %sd24, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:115 : $$arg_ptr_acc_positions_T79_T279
+      add.s64              %sd25, %sd24, %bd2;         // gpumd.cpp:115
+      st.global.f64        [%sd25], 0d4040000000000000;// gpumd.cpp:115 : 0[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      bra                  $main$ck_L101_1__l277__;
+$main$ck_L101_1__l275__:
+      .loc                 1  119  0
+      neg.f64              %fd1, %fd1;                 // gpumd.cpp:119 : $acc_positions_T80_WR0_S170
+      ld.param.s64         %sd26, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:119 : $$arg_ptr_acc_positions_T79_T279
+      cvt.s64.s32          %sd27, %s3;                 // gpumd.cpp:119
+      shl.b64              %bd3, %sd27, 3;             // gpumd.cpp:119
+      add.s64              %sd28, %sd26, %bd3;         // gpumd.cpp:119
+      .loc                 1  120  0
+      neg.f64              %fd36, %fd2;                // gpumd.cpp:120
+      .loc                 1  119  0
+      st.global.f64        [%sd28], %fd1;              // gpumd.cpp:119 : 0[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      .loc                 1  120  0
+      ld.param.s64         %sd29, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:120 : $$arg_ptr_acc_velocities_T77_T278
+      add.s64              %sd30, %sd29, %bd3;         // gpumd.cpp:120
+      st.global.f64        [%sd30], %fd36;             // gpumd.cpp:120 : 0[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+$main$ck_L101_1__l277__:
+      .loc                 1  123  0
+      ld.param.s64         %sd31, [$$arg_ptr_acc_universe_size_T81_T280];// gpumd.cpp:123 : $$arg_ptr_acc_universe_size_T81_T280
+      ld.global.nc.f64     %fd3, [%sd31];              // gpumd.cpp:123 : $$GVN_universe_size_201_T254
+      setp.le.f64          %p4, %fd1, %fd3;            // gpumd.cpp:123
+      @%p4 bra             $main$ck_L101_1__l280__;    // gpumd.cpp:123
+      .loc                 1  124  0
+      neg.f64              %fd37, %fd1;                // gpumd.cpp:124
+      mad.rn.f64           %fd38, 0d4000000000000000, %fd3, %fd37;// gpumd.cpp:124
+      ld.param.s64         %sd32, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:124 : $$arg_ptr_acc_positions_T79_T279
+      cvt.s64.s32          %sd33, %s3;                 // gpumd.cpp:124
+      shl.b64              %bd4, %sd33, 3;             // gpumd.cpp:124
+      add.s64              %sd34, %sd32, %bd4;         // gpumd.cpp:124
+      st.global.f64        [%sd34], %fd38;             // gpumd.cpp:124 : 0[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      .loc                 1  125  0
+      ld.param.s64         %sd35, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:125 : $$arg_ptr_acc_velocities_T77_T278
+      add.s64              %sd36, %sd35, %bd4;         // gpumd.cpp:125
+      ld.global.f64        %fd39, [%sd36];             // gpumd.cpp:125 : 0[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      neg.f64              %fd40, %fd39;               // gpumd.cpp:125
+      st.global.f64        [%sd36], %fd40;             // gpumd.cpp:125 : 0[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+$main$ck_L101_1__l280__:
+      .loc                 1  103  0
+      ld.param.s64         %sd37, [$$arg_ptr_acc_cfe_static_2709_T93_T284];// gpumd.cpp:103 : $$arg_ptr_acc_cfe_static_2709_T93_T284
+      ld.global.nc.f64     %fd41, [%sd37 + 8];         // gpumd.cpp:103 : 1[$$arg_ptr_acc_cfe_static_2709_T93_T284,0,ex].L
+      mov.s64              %sd38, $_pvt2_force_T40__f1s361;// gpumd.cpp:103
+      .loc                 1  108  0
+      cvt.s64.s32          %sd39, %s3;                 // gpumd.cpp:108
+      shl.b64              %bd5, %sd39, 3;             // gpumd.cpp:108
+      .loc                 1  109  0
+      mov.s64              %sd40, $_pvt2_prev_acceleration_T39__f1s360;// gpumd.cpp:109
+      .loc                 1  103  0
+      st.local.f64         [%sd38 + 8], %fd41;         // gpumd.cpp:103 : (1,$_pvt2_force_T40)[0].L
+      .loc                 1  108  0
+      ld.param.s64         %sd41, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:108 : $$arg_ptr_acc_velocities_T77_T278
+      ld.param.s64         %sd42, [$$arg_ptr_acc_accelerations_T75_T277];// gpumd.cpp:108 : $$arg_ptr_acc_accelerations_T75_T277
+      ld.param.s64         %sd43, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:108 : $$arg_ptr_acc_positions_T79_T279
+      add.s64              %sd44, %sd41, %bd5;         // gpumd.cpp:108
+      ld.global.f64        %fd7, [%sd44 + 8];          // gpumd.cpp:108 : $$GVN_velocities_189_T242
+      add.s64              %sd45, %sd42, %bd5;         // gpumd.cpp:108
+      ld.global.f64        %fd42, [%sd45 + 8];         // gpumd.cpp:108 : 1[$$arg_ptr_acc_accelerations_T75_T277,$$SR_E8_T164].L
+      mul.rn.f64           %fd43, %fd4, %fd42;         // gpumd.cpp:108
+      add.s64              %sd46, %sd43, %bd5;         // gpumd.cpp:108
+      ld.global.f64        %fd44, [%sd46 + 8];         // gpumd.cpp:108 : 1[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      mad.rn.f64           %fd45, %fd7, %fd5, %fd44;   // gpumd.cpp:108
+      mad.rn.f64           %fd46, 0d3fe0000000000000, %fd43, %fd45;// gpumd.cpp:108
+      st.global.f64        [%sd46 + 8], %fd46;         // gpumd.cpp:108 : 1[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      .loc                 1  109  0
+      st.local.f64         [%sd40 + 8], %fd42;         // gpumd.cpp:109 : (1,$_pvt2_prev_acceleration_T39)[0].L
+      .loc                 1  108  0
+      mov.f64              %fd6, %fd46;                // gpumd.cpp:108 : $acc_positions_T80_WR0_S172
+      .loc                 1  112  0
+      setp.ge.f64          %p5, %fd46, 0d0000000000000000;// gpumd.cpp:112
+      @%p5 bra             $main$ck_L101_1__l287__;    // gpumd.cpp:112
+      .loc                 1  114  0
+      setp.ge.f64          %p6, %fd6, 0dc040000000000000;// gpumd.cpp:114
+      @%p6 bra             $main$ck_L101_1__l285__;    // gpumd.cpp:114
+      .loc                 1  115  0
+      mov.f64              %fd6, 0d4040000000000000;   // gpumd.cpp:115 : $acc_positions_T80_WR0_S172
+      cvt.s64.s32          %sd47, %s3;                 // gpumd.cpp:115
+      shl.b64              %bd6, %sd47, 3;             // gpumd.cpp:115
+      ld.param.s64         %sd48, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:115 : $$arg_ptr_acc_positions_T79_T279
+      add.s64              %sd49, %sd48, %bd6;         // gpumd.cpp:115
+      st.global.f64        [%sd49 + 8], 0d4040000000000000;// gpumd.cpp:115 : 1[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      bra                  $main$ck_L101_1__l287__;
+$main$ck_L101_1__l285__:
+      .loc                 1  119  0
+      neg.f64              %fd6, %fd6;                 // gpumd.cpp:119 : $acc_positions_T80_WR0_S172
+      ld.param.s64         %sd50, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:119 : $$arg_ptr_acc_positions_T79_T279
+      cvt.s64.s32          %sd51, %s3;                 // gpumd.cpp:119
+      shl.b64              %bd7, %sd51, 3;             // gpumd.cpp:119
+      add.s64              %sd52, %sd50, %bd7;         // gpumd.cpp:119
+      .loc                 1  120  0
+      neg.f64              %fd47, %fd7;                // gpumd.cpp:120
+      .loc                 1  119  0
+      st.global.f64        [%sd52 + 8], %fd6;          // gpumd.cpp:119 : 1[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      .loc                 1  120  0
+      ld.param.s64         %sd53, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:120 : $$arg_ptr_acc_velocities_T77_T278
+      add.s64              %sd54, %sd53, %bd7;         // gpumd.cpp:120
+      st.global.f64        [%sd54 + 8], %fd47;         // gpumd.cpp:120 : 1[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+$main$ck_L101_1__l287__:
+      .loc                 1  123  0
+      ld.param.s64         %sd55, [$$arg_ptr_acc_universe_size_T81_T280];// gpumd.cpp:123 : $$arg_ptr_acc_universe_size_T81_T280
+      ld.global.nc.f64     %fd8, [%sd55 + 8];          // gpumd.cpp:123 : $$GVN_universe_size_200_T253
+      setp.le.f64          %p7, %fd6, %fd8;            // gpumd.cpp:123
+      @%p7 bra             $main$ck_L101_1__l290__;    // gpumd.cpp:123
+      .loc                 1  124  0
+      neg.f64              %fd48, %fd6;                // gpumd.cpp:124
+      mad.rn.f64           %fd49, 0d4000000000000000, %fd8, %fd48;// gpumd.cpp:124
+      ld.param.s64         %sd56, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:124 : $$arg_ptr_acc_positions_T79_T279
+      cvt.s64.s32          %sd57, %s3;                 // gpumd.cpp:124
+      shl.b64              %bd8, %sd57, 3;             // gpumd.cpp:124
+      add.s64              %sd58, %sd56, %bd8;         // gpumd.cpp:124
+      st.global.f64        [%sd58 + 8], %fd49;         // gpumd.cpp:124 : 1[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      .loc                 1  125  0
+      ld.param.s64         %sd59, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:125 : $$arg_ptr_acc_velocities_T77_T278
+      add.s64              %sd60, %sd59, %bd8;         // gpumd.cpp:125
+      ld.global.f64        %fd50, [%sd60 + 8];         // gpumd.cpp:125 : 1[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      neg.f64              %fd51, %fd50;               // gpumd.cpp:125
+      st.global.f64        [%sd60 + 8], %fd51;         // gpumd.cpp:125 : 1[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+$main$ck_L101_1__l290__:
+      .loc                 1  103  0
+      ld.param.s64         %sd61, [$$arg_ptr_acc_cfe_static_2709_T93_T284];// gpumd.cpp:103 : $$arg_ptr_acc_cfe_static_2709_T93_T284
+      ld.global.nc.f64     %fd52, [%sd61 + 16];        // gpumd.cpp:103 : 2[$$arg_ptr_acc_cfe_static_2709_T93_T284,0,ex].L
+      mov.s64              %sd62, $_pvt2_force_T40__f1s361;// gpumd.cpp:103
+      .loc                 1  108  0
+      cvt.s64.s32          %sd63, %s3;                 // gpumd.cpp:108
+      shl.b64              %bd9, %sd63, 3;             // gpumd.cpp:108
+      .loc                 1  109  0
+      mov.s64              %sd64, $_pvt2_prev_acceleration_T39__f1s360;// gpumd.cpp:109
+      .loc                 1  103  0
+      st.local.f64         [%sd62 + 16], %fd52;        // gpumd.cpp:103 : (2,$_pvt2_force_T40)[0].L
+      .loc                 1  108  0
+      ld.param.s64         %sd65, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:108 : $$arg_ptr_acc_velocities_T77_T278
+      ld.param.s64         %sd66, [$$arg_ptr_acc_accelerations_T75_T277];// gpumd.cpp:108 : $$arg_ptr_acc_accelerations_T75_T277
+      ld.param.s64         %sd67, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:108 : $$arg_ptr_acc_positions_T79_T279
+      add.s64              %sd68, %sd65, %bd9;         // gpumd.cpp:108
+      ld.global.f64        %fd10, [%sd68 + 16];        // gpumd.cpp:108 : $$GVN_velocities_187_T240
+      add.s64              %sd69, %sd66, %bd9;         // gpumd.cpp:108
+      ld.global.f64        %fd53, [%sd69 + 16];        // gpumd.cpp:108 : 2[$$arg_ptr_acc_accelerations_T75_T277,$$SR_E8_T164].L
+      mul.rn.f64           %fd54, %fd4, %fd53;         // gpumd.cpp:108
+      add.s64              %sd70, %sd67, %bd9;         // gpumd.cpp:108
+      ld.global.f64        %fd55, [%sd70 + 16];        // gpumd.cpp:108 : 2[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      mad.rn.f64           %fd56, %fd10, %fd5, %fd55;  // gpumd.cpp:108
+      mad.rn.f64           %fd57, 0d3fe0000000000000, %fd54, %fd56;// gpumd.cpp:108
+      st.global.f64        [%sd70 + 16], %fd57;        // gpumd.cpp:108 : 2[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      .loc                 1  109  0
+      st.local.f64         [%sd64 + 16], %fd53;        // gpumd.cpp:109 : (2,$_pvt2_prev_acceleration_T39)[0].L
+      .loc                 1  108  0
+      mov.f64              %fd9, %fd57;                // gpumd.cpp:108 : $$$_acc_positions_T80_WR0_R3
+      .loc                 1  112  0
+      setp.ge.f64          %p8, %fd57, 0d0000000000000000;// gpumd.cpp:112
+      @%p8 bra             $main$ck_L101_1__l297__;    // gpumd.cpp:112
+      .loc                 1  114  0
+      setp.ge.f64          %p9, %fd9, 0dc040000000000000;// gpumd.cpp:114
+      @%p9 bra             $main$ck_L101_1__l295__;    // gpumd.cpp:114
+      .loc                 1  115  0
+      mov.f64              %fd9, 0d4040000000000000;   // gpumd.cpp:115 : $$$_acc_positions_T80_WR0_R3
+      cvt.s64.s32          %sd71, %s3;                 // gpumd.cpp:115
+      shl.b64              %bd10, %sd71, 3;            // gpumd.cpp:115
+      ld.param.s64         %sd72, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:115 : $$arg_ptr_acc_positions_T79_T279
+      add.s64              %sd73, %sd72, %bd10;        // gpumd.cpp:115
+      st.global.f64        [%sd73 + 16], 0d4040000000000000;// gpumd.cpp:115 : 2[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      bra                  $main$ck_L101_1__l297__;
+$main$ck_L101_1__l295__:
+      .loc                 1  119  0
+      neg.f64              %fd9, %fd9;                 // gpumd.cpp:119 : $$$_acc_positions_T80_WR0_R3
+      ld.param.s64         %sd74, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:119 : $$arg_ptr_acc_positions_T79_T279
+      cvt.s64.s32          %sd75, %s3;                 // gpumd.cpp:119
+      shl.b64              %bd11, %sd75, 3;            // gpumd.cpp:119
+      add.s64              %sd76, %sd74, %bd11;        // gpumd.cpp:119
+      .loc                 1  120  0
+      neg.f64              %fd58, %fd10;               // gpumd.cpp:120
+      .loc                 1  119  0
+      st.global.f64        [%sd76 + 16], %fd9;         // gpumd.cpp:119 : 2[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      .loc                 1  120  0
+      ld.param.s64         %sd77, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:120 : $$arg_ptr_acc_velocities_T77_T278
+      add.s64              %sd78, %sd77, %bd11;        // gpumd.cpp:120
+      st.global.f64        [%sd78 + 16], %fd58;        // gpumd.cpp:120 : 2[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+$main$ck_L101_1__l297__:
+      .loc                 1  123  0
+      ld.param.s64         %sd79, [$$arg_ptr_acc_universe_size_T81_T280];// gpumd.cpp:123 : $$arg_ptr_acc_universe_size_T81_T280
+      ld.global.nc.f64     %fd11, [%sd79 + 16];        // gpumd.cpp:123 : $$GVN_universe_size_199_T252
+      setp.le.f64          %p10, %fd9, %fd11;          // gpumd.cpp:123
+      @%p10 bra            $main$ck_L101_1__l301__;    // gpumd.cpp:123
+      .loc                 1  124  0
+      neg.f64              %fd59, %fd9;                // gpumd.cpp:124
+      mad.rn.f64           %fd9, 0d4000000000000000, %fd11, %fd59;// gpumd.cpp:124 : $$$_acc_positions_T80_WR0_R3
+      ld.param.s64         %sd80, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:124 : $$arg_ptr_acc_positions_T79_T279
+      cvt.s64.s32          %sd81, %s3;                 // gpumd.cpp:124
+      shl.b64              %bd12, %sd81, 3;            // gpumd.cpp:124
+      add.s64              %sd82, %sd80, %bd12;        // gpumd.cpp:124
+      st.global.f64        [%sd82 + 16], %fd9;         // gpumd.cpp:124 : 2[$$arg_ptr_acc_positions_T79_T279,$$SR_E8_T164].L
+      .loc                 1  125  0
+      ld.param.s64         %sd83, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:125 : $$arg_ptr_acc_velocities_T77_T278
+      add.s64              %sd84, %sd83, %bd12;        // gpumd.cpp:125
+      ld.global.f64        %fd60, [%sd84 + 16];        // gpumd.cpp:125 : 2[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      neg.f64              %fd61, %fd60;               // gpumd.cpp:125
+      st.global.f64        [%sd84 + 16], %fd61;        // gpumd.cpp:125 : 2[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+$main$ck_L101_1__l301__:
+      .loc                 1  132  0
+      mov.s32              %s5, 0;                     // gpumd.cpp:132 : $$I_j_50_T151
+      .loc                 1  134  0
+      mov.s32              %s6, 0;                     // gpumd.cpp:134 : $$SR_E6_T162
+      .loc                 1  133  0
+      mov.s64              %sd1, 0;                    // gpumd.cpp:133 : $$SR_E7_T163
+      .loc                 1  134  0
+      shl.b32              %b1, %s3, 3;                // gpumd.cpp:134
+      cvt.s64.s32          %sd85, %b1;                 // gpumd.cpp:134
+      ld.param.s64         %sd86, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:134 : $$arg_ptr_acc_positions_T79_T279
+      add.s64              %sd2, %sd86, %sd85;         // gpumd.cpp:134 : $$LIS_positions_93_T169
+      .loc                 1  133  0
+      mov.s32              %s8, %s4;                   // gpumd.cpp:133 : $$LIS_i_97_T173
+      .loc                 1  132  0
+      mov.s64              %sd9, -63;                  // gpumd.cpp:132 : $$Induc02_J1_T208
+      .loc                 1  138  0
+      mov.f64              %fd13, 0d3ff0000000000000;  // gpumd.cpp:138 : $$LIS_1_229_T272
+$main$ck_L101_1__l302__:
+      .loc                 1  132  0
+      mov.s32              %s7, 0;                     // gpumd.cpp:132 : $j_S174
+      cvt.s64.s32          %sd87, %s5;                 // gpumd.cpp:132
+      setp.lt.s64          %p11, %sd87, 62;            // gpumd.cpp:132
+      selp.s64             %sd88, 256, 128, %p11;      // gpumd.cpp:132
+      .loc                 1  134  0
+      mov.s64              %sd3, 0;                    // gpumd.cpp:134 : $$SR_E2_T158
+      mov.s32              %s9, %s6;                   // gpumd.cpp:134 : $$SR_E3_T159
+      .loc                 1  132  0
+      neg.s64              %sd4, %sd88;                // gpumd.cpp:132 : $$Induc01_J0_T207
+$main$ck_L101_1__l305__:
+      .loc                 1  133  0
+      cvt.s64.s32          %sd89, %s7;                 // gpumd.cpp:133
+      add.s64              %sd90, %sd1, %sd89;         // gpumd.cpp:133
+      cvt.s32.s64          %s15, %sd90;                // gpumd.cpp:133
+      sub.s32              %s16, %s15, %s8;            // gpumd.cpp:133
+      setp.eq.s32          %p12, %s16, 0;              // gpumd.cpp:133
+      @%p12 bra            $main$ck_L101_1__l313__;    // gpumd.cpp:133
+      .loc                 1  134  0
+      ld.param.s64         %sd91, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:134 : $$arg_ptr_acc_positions_T79_T279
+      cvt.s64.s32          %sd92, %s9;                 // gpumd.cpp:134
+      shl.b64              %bd13, %sd92, 3;            // gpumd.cpp:134
+      add.s64              %sd93, %sd91, %bd13;        // gpumd.cpp:134
+      ld.global.f64        %fd62, [%sd93];             // gpumd.cpp:134 : 0[$$arg_ptr_acc_positions_T79_T279,$$SR_E3_T159].L
+      ld.global.f64        %fd63, [%sd93 + 8];         // gpumd.cpp:134 : 1[$$arg_ptr_acc_positions_T79_T279,$$SR_E3_T159].L
+      ld.global.f64        %fd64, [%sd2];              // gpumd.cpp:134 : 0[$$LIS_positions_93_T169,0].L
+      ld.global.f64        %fd65, [%sd2 + 8];          // gpumd.cpp:134 : 1[$$LIS_positions_93_T169,0].L
+      sub.rn.f64           %fd15, %fd64, %fd62;        // gpumd.cpp:134 : $$GVN_positions_179_T232
+      sub.rn.f64           %fd14, %fd65, %fd63;        // gpumd.cpp:134 : $$GVN_positions_178_T231
+      mul.rn.f64           %fd66, %fd14, %fd14;        // gpumd.cpp:134
+      mad.rn.f64           %fd67, %fd15, %fd15, %fd66; // gpumd.cpp:134
+      cvt.s64.s32          %sd94, %s7;                 // gpumd.cpp:134
+      shl.b64              %bd14, %sd94, 3;            // gpumd.cpp:134
+      mov.s32              %s17, 0;                    // gpumd.cpp:134
+      cvt.s64.s32          %sd95, %s17;                // gpumd.cpp:134
+      add.s64              %sd96, %sd95, %bd14;        // gpumd.cpp:134
+      mov.s64              %sd97, $_TA_squared_dist_18__f1s637;// gpumd.cpp:134
+      add.s64              %sd98, %sd96, %sd97;        // gpumd.cpp:134
+      mov.s64              %sd99, $_TA_cfe_19__f1s638; // gpumd.cpp:134
+      add.s64              %sd100, %sd96, %sd99;       // gpumd.cpp:134
+      st.local.f64         [%sd98], %fd67;             // gpumd.cpp:134 : $_TA_squared_dist_18[$j_S174].L
+      ld.global.f64        %fd68, [%sd93 + 16];        // gpumd.cpp:134 : 2[$$arg_ptr_acc_positions_T79_T279,$$SR_E3_T159].L
+      ld.global.f64        %fd69, [%sd2 + 16];         // gpumd.cpp:134 : 2[$$LIS_positions_93_T169,0].L
+      sub.rn.f64           %fd70, %fd69, %fd68;        // gpumd.cpp:134
+      mul.rn.f64           %fd71, %fd70, %fd70;        // gpumd.cpp:134
+      add.rn.f64           %fd72, %fd67, %fd71;        // gpumd.cpp:134
+      st.local.f64         [%sd98], %fd72;             // gpumd.cpp:134 : $_TA_squared_dist_18[$j_S174].L
+      sqrt.rn.f64          %fd73, %fd72;               // gpumd.cpp:134
+      st.local.f64         [%sd100], %fd73;            // gpumd.cpp:134 : $_TA_cfe_19[$j_S174].L
+      mov.f64              %fd12, %fd73;               // gpumd.cpp:134 : $$_TA_cfe_19_WR0_R6
+      .loc                 1  136  0
+      setp.ge.f64          %p13, %fd73, 0d4020000000000000;// gpumd.cpp:136
+      @%p13 bra            $main$ck_L101_1__l313__;    // gpumd.cpp:136
+      .loc                 1  141  0
+      ld.param.s64         %sd101, [$$arg_ptr_acc_k_T87_T282];// gpumd.cpp:141 : $$arg_ptr_acc_k_T87_T282
+      st.global.s32        [%sd101], 3;                // gpumd.cpp:141 : 0[$$arg_ptr_acc_k_T87_T282,0]
+      .loc                 1  138  0
+      div.rn.f64           %fd74, %fd13, %fd12;        // gpumd.cpp:138
+      mul.rn.f64           %fd75, %fd74, 0d3fc0000000000000;// gpumd.cpp:138
+      mul.rn.f64           %fd76, %fd75, %fd75;        // gpumd.cpp:138
+      mul.rn.f64           %fd77, %fd75, %fd76;        // gpumd.cpp:138
+      mul.rn.f64           %fd78, %fd77, %fd77;        // gpumd.cpp:138
+      neg.f64              %fd79, %fd78;               // gpumd.cpp:138
+      mul.rn.f64           %fd80, %fd78, %fd78;        // gpumd.cpp:138
+      mul.rn.f64           %fd81, %fd75, %fd80;        // gpumd.cpp:138
+      mul.rn.f64           %fd82, %fd81, 0d4000000000000000;// gpumd.cpp:138
+      mad.rn.f64           %fd83, %fd75, %fd79, %fd82; // gpumd.cpp:138
+      cvt.s64.s32          %sd102, %s7;                // gpumd.cpp:138
+      shl.b64              %bd15, %sd102, 3;           // gpumd.cpp:138
+      mov.s32              %s18, 0;                    // gpumd.cpp:138
+      cvt.s64.s32          %sd103, %s18;               // gpumd.cpp:138
+      add.s64              %sd104, %sd103, %bd15;      // gpumd.cpp:138
+      mov.s64              %sd105, $_TA_x_20__f1s639;  // gpumd.cpp:138
+      add.s64              %sd106, %sd104, %sd105;     // gpumd.cpp:138
+      st.local.f64         [%sd106], %fd83;            // gpumd.cpp:138 : $_TA_x_20[$j_S174].L
+      .loc                 1  141  0
+      mov.s64              %sd107, $_TA_k_21__f1s640;  // gpumd.cpp:141
+      add.s64              %sd108, %sd104, %sd107;     // gpumd.cpp:141
+      st.local.s64         [%sd108], 2;                // gpumd.cpp:141 : $_TA_k_21[$j_S174].L
+      mul.rn.f64           %fd84, %fd83, 0d4053333333333334;// gpumd.cpp:141
+      mul.rn.f64           %fd85, %fd84, %fd14;        // gpumd.cpp:141
+      mul.rn.f64           %fd86, %fd74, %fd85;        // gpumd.cpp:141
+      mov.s64              %sd109, $_TA_SCF_23__f1s642;// gpumd.cpp:141
+      add.s64              %sd110, %sd104, %sd109;     // gpumd.cpp:141
+      st.local.f64         [%sd110], %fd86;            // gpumd.cpp:141 : $_TA_SCF_23[$j_S174].L
+      mul.rn.f64           %fd87, %fd84, %fd15;        // gpumd.cpp:141
+      mul.rn.f64           %fd88, %fd74, %fd87;        // gpumd.cpp:141
+      mov.s64              %sd111, $_TA_SCF_22__f1s641;// gpumd.cpp:141
+      add.s64              %sd112, %sd104, %sd111;     // gpumd.cpp:141
+      st.local.f64         [%sd112], %fd88;            // gpumd.cpp:141 : $_TA_SCF_22[$j_S174].L
+      mov.s64              %sd113, $_TA_CND_SPLT_24__f1s643;// gpumd.cpp:141
+      add.s64              %sd114, %sd104, %sd113;     // gpumd.cpp:141
+      st.local.s64         [%sd114], 0;                // gpumd.cpp:141 : $_TA_CND_SPLT_24[$j_S174].L
+$main$ck_L101_1__l313__:
+      .loc                 1  134  0
+      add.s64              %sd3, %sd3, 3;              // gpumd.cpp:134 : $$SR_E2_T158
+      add.s32              %s9, %s9, 3;                // gpumd.cpp:134 : $$SR_E3_T159
+      .loc                 1  132  0
+      add.s32              %s7, %s7, 1;                // gpumd.cpp:132 : $j_S174
+      add.s64              %sd4, %sd4, 1;              // gpumd.cpp:132 : $$Induc01_J0_T207
+      setp.lt.s64          %p14, %sd4, 0;              // gpumd.cpp:132
+      @%p14 bra            $main$ck_L101_1__l305__;    // gpumd.cpp:132
+      .loc                 1  132  0
+      mov.s32              %s11, 0;                    // gpumd.cpp:132 : $$NI_j_34_G5_T150
+      cvt.s64.s32          %sd115, %s5;                // gpumd.cpp:132
+      setp.lt.s64          %p15, %sd115, 62;           // gpumd.cpp:132
+      selp.s32             %s10, 256, 128, %p15;       // gpumd.cpp:132 : $$T_NI_j_34_G5_H1_T155
+      .loc                 1  141  0
+      mov.s64              %sd8, 0;                    // gpumd.cpp:141 : $$SR_E4_T160
+      cvt.s64.s32          %sd5, %s6;                  // gpumd.cpp:141 : $$SR_E5_T161
+      .loc                 1  132  0
+      cvt.s64.s32          %sd116, %s10;               // gpumd.cpp:132
+      setp.gt.s64          %p16, 2, %sd116;            // gpumd.cpp:132
+      @%p16 bra            $main$ck_L101_1__l335__;    // gpumd.cpp:132
+      .loc                 1  132  0
+      shr.b32              %b2, %s10, 31;              // gpumd.cpp:132
+      add.s32              %s19, %s10, %b2;            // gpumd.cpp:132
+      and.b32              %b3, %s19, 0xfffffffffffffffe;// gpumd.cpp:132
+      add.s32              %s20, %b3, 1;               // gpumd.cpp:132
+      shr.b32              %b4, %s20, 1;               // gpumd.cpp:132
+      neg.s32              %s21, %b4;                  // gpumd.cpp:132
+      cvt.s64.s32          %sd4, %s21;                 // gpumd.cpp:132 : $$Induc01_J0_T207
+      .loc                 1  133  0
+      add.s64              %sd6, %sd1, 1;              // gpumd.cpp:133 : $$LIS_SRE7_210_T263
+$main$ck_L101_1__l317__:
+      .loc                 1  133  0
+      cvt.s64.s32          %sd117, %s11;               // gpumd.cpp:133
+      add.s64              %sd118, %sd1, %sd117;       // gpumd.cpp:133
+      cvt.s32.s64          %s22, %sd118;               // gpumd.cpp:133
+      sub.s32              %s23, %s22, %s8;            // gpumd.cpp:133
+      setp.eq.s32          %p17, %s23, 0;              // gpumd.cpp:133
+      @%p17 bra            $main$ck_L101_1__l325__;    // gpumd.cpp:133
+      .loc                 1  136  0
+      cvt.s64.s32          %sd119, %s11;               // gpumd.cpp:136
+      shl.b64              %bd16, %sd119, 3;           // gpumd.cpp:136
+      mov.s32              %s24, 0;                    // gpumd.cpp:136
+      cvt.s64.s32          %sd120, %s24;               // gpumd.cpp:136
+      add.s64              %sd121, %sd120, %bd16;      // gpumd.cpp:136
+      mov.s64              %sd122, $_TA_squared_dist_18__f1s637;// gpumd.cpp:136
+      add.s64              %sd123, %sd121, %sd122;     // gpumd.cpp:136
+      ld.local.f64         %fd89, [%sd123];            // gpumd.cpp:136 : $_TA_squared_dist_18[$$NI_j_34_G5_T150].L
+      sqrt.rn.f64          %fd90, %fd89;               // gpumd.cpp:136
+      setp.ge.f64          %p18, %fd90, 0d4020000000000000;// gpumd.cpp:136
+      @%p18 bra            $main$ck_L101_1__l325__;    // gpumd.cpp:136
+      .loc                 1  141  0
+      cvt.s64.s32          %sd124, %s11;               // gpumd.cpp:141
+      shl.b64              %bd17, %sd124, 3;           // gpumd.cpp:141
+      mov.s32              %s25, 0;                    // gpumd.cpp:141
+      cvt.s64.s32          %sd125, %s25;               // gpumd.cpp:141
+      add.s64              %sd126, %sd125, %bd17;      // gpumd.cpp:141
+      mov.s64              %sd127, $_TA_SCF_22__f1s641;// gpumd.cpp:141
+      add.s64              %sd128, %sd126, %sd127;     // gpumd.cpp:141
+      ld.local.f64         %fd91, [%sd128];            // gpumd.cpp:141 : $_TA_SCF_22[$$NI_j_34_G5_T150].L
+      mov.s64              %sd129, $_pvt2_force_T40__f1s361;// gpumd.cpp:141
+      ld.local.f64         %fd92, [%sd129];            // gpumd.cpp:141 : $_pvt2_force_T40[0].L
+      add.rn.f64           %fd93, %fd92, %fd91;        // gpumd.cpp:141
+      mov.s64              %sd130, $_TA_SCF_23__f1s642;// gpumd.cpp:141
+      add.s64              %sd131, %sd126, %sd130;     // gpumd.cpp:141
+      mov.s64              %sd132, $_TA_CND_SPLT_24__f1s643;// gpumd.cpp:141
+      add.s64              %sd133, %sd126, %sd132;     // gpumd.cpp:141
+      st.local.f64         [%sd129], %fd93;            // gpumd.cpp:141 : $_pvt2_force_T40[0].L
+      ld.local.f64         %fd94, [%sd131];            // gpumd.cpp:141 : $_TA_SCF_23[$$NI_j_34_G5_T150].L
+      ld.local.f64         %fd95, [%sd129 + 8];        // gpumd.cpp:141 : (1,$_pvt2_force_T40)[0].L
+      add.rn.f64           %fd96, %fd95, %fd94;        // gpumd.cpp:141
+      st.local.f64         [%sd129 + 8], %fd96;        // gpumd.cpp:141 : (1,$_pvt2_force_T40)[0].L
+      ld.local.s64         %sd134, [%sd133];           // gpumd.cpp:141 : $_TA_CND_SPLT_24[$$NI_j_34_G5_T150].L
+      setp.ne.s64          %p19, %sd134, 0;            // gpumd.cpp:141
+      @%p19 bra            $main$ck_L101_1__l325__;    // gpumd.cpp:141
+      .loc                 1  141  0
+      cvt.s64.s32          %sd135, %s11;               // gpumd.cpp:141
+      shl.b64              %bd18, %sd135, 3;           // gpumd.cpp:141
+      mov.s32              %s26, 0;                    // gpumd.cpp:141
+      cvt.s64.s32          %sd136, %s26;               // gpumd.cpp:141
+      add.s64              %sd137, %sd136, %bd18;      // gpumd.cpp:141
+      mov.s64              %sd138, $_TA_k_21__f1s640;  // gpumd.cpp:141
+      add.s64              %sd139, %sd137, %sd138;     // gpumd.cpp:141
+      ld.local.s64         %sd140, [%sd139];           // gpumd.cpp:141 : $_TA_k_21[$$NI_j_34_G5_T150].L
+      cvt.s32.s64          %s27, %sd140;               // gpumd.cpp:141
+      mov.s64              %sd141, $_TA_x_20__f1s639;  // gpumd.cpp:141
+      add.s64              %sd142, %sd137, %sd141;     // gpumd.cpp:141
+      ld.local.f64         %fd97, [%sd142];            // gpumd.cpp:141 : $_TA_x_20[$$NI_j_34_G5_T150].L
+      mul.rn.f64           %fd98, %fd97, 0d4053333333333334;// gpumd.cpp:141
+      shl.b64              %bd19, %sd5, 3;             // gpumd.cpp:141
+      ld.param.s64         %sd143, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:141 : $$arg_ptr_acc_positions_T79_T279
+      add.s64              %sd144, %sd143, %bd19;      // gpumd.cpp:141
+      cvt.s64.s32          %sd145, %s27;               // gpumd.cpp:141
+      shl.b64              %bd20, %sd145, 3;           // gpumd.cpp:141
+      add.s64              %sd146, %sd144, %bd20;      // gpumd.cpp:141
+      add.s64              %sd147, %sd2, %bd20;        // gpumd.cpp:141
+      ld.global.f64        %fd99, [%sd147];            // gpumd.cpp:141 : 0[$$LIS_positions_93_T169,$$GVN_TA_198_T251].L
+      ld.global.f64        %fd100, [%sd146];           // gpumd.cpp:141 : 0[$$arg_ptr_acc_positions_T79_T279 + ($$SR_E5_T161 << 3),$$GVN_TA_198_T251].L
+      sub.rn.f64           %fd101, %fd99, %fd100;      // gpumd.cpp:141
+      mul.rn.f64           %fd102, %fd98, %fd101;      // gpumd.cpp:141
+      mov.s64              %sd148, $_TA_cfe_19__f1s638;// gpumd.cpp:141
+      add.s64              %sd149, %sd137, %sd148;     // gpumd.cpp:141
+      ld.local.f64         %fd103, [%sd149];           // gpumd.cpp:141 : $_TA_cfe_19[$$NI_j_34_G5_T150].L
+      div.rn.f64           %fd104, %fd102, %fd103;     // gpumd.cpp:141
+      mov.s64              %sd150, $_pvt2_force_T40__f1s361;// gpumd.cpp:141
+      add.s64              %sd151, %sd136, %sd150;     // gpumd.cpp:141
+      add.s64              %sd152, %sd151, %bd20;      // gpumd.cpp:141
+      ld.local.f64         %fd105, [%sd152];           // gpumd.cpp:141 : $_pvt2_force_T40[$$GVN_TA_198_T251].L
+      add.rn.f64           %fd106, %fd105, %fd104;     // gpumd.cpp:141
+      st.local.f64         [%sd152], %fd106;           // gpumd.cpp:141 : $_pvt2_force_T40[$$GVN_TA_198_T251].L
+$main$ck_L101_1__l325__:
+      .loc                 1  141  0
+      add.s64              %sd7, %sd5, 3;              // gpumd.cpp:141 : $SR_S178
+      .loc                 1  133  0
+      cvt.s64.s32          %sd153, %s11;               // gpumd.cpp:133
+      add.s64              %sd154, %sd6, %sd153;       // gpumd.cpp:133
+      cvt.s32.s64          %s28, %sd154;               // gpumd.cpp:133
+      sub.s32              %s29, %s28, %s8;            // gpumd.cpp:133
+      setp.eq.s32          %p20, %s29, 0;              // gpumd.cpp:133
+      @%p20 bra            $main$ck_L101_1__l334__;    // gpumd.cpp:133
+      .loc                 1  136  0
+      cvt.s64.s32          %sd155, %s11;               // gpumd.cpp:136
+      shl.b64              %bd21, %sd155, 3;           // gpumd.cpp:136
+      mov.s32              %s30, 0;                    // gpumd.cpp:136
+      cvt.s64.s32          %sd156, %s30;               // gpumd.cpp:136
+      add.s64              %sd157, %sd156, %bd21;      // gpumd.cpp:136
+      mov.s64              %sd158, $_TA_squared_dist_18__f1s637;// gpumd.cpp:136
+      add.s64              %sd159, %sd157, %sd158;     // gpumd.cpp:136
+      ld.local.f64         %fd107, [%sd159 + 8];       // gpumd.cpp:136 : (1,$_TA_squared_dist_18)[$$NI_j_34_G5_T150].L
+      sqrt.rn.f64          %fd108, %fd107;             // gpumd.cpp:136
+      setp.ge.f64          %p21, %fd108, 0d4020000000000000;// gpumd.cpp:136
+      @%p21 bra            $main$ck_L101_1__l334__;    // gpumd.cpp:136
+      .loc                 1  141  0
+      cvt.s64.s32          %sd160, %s11;               // gpumd.cpp:141
+      shl.b64              %bd22, %sd160, 3;           // gpumd.cpp:141
+      mov.s32              %s31, 0;                    // gpumd.cpp:141
+      cvt.s64.s32          %sd161, %s31;               // gpumd.cpp:141
+      add.s64              %sd162, %sd161, %bd22;      // gpumd.cpp:141
+      mov.s64              %sd163, $_TA_SCF_22__f1s641;// gpumd.cpp:141
+      add.s64              %sd164, %sd162, %sd163;     // gpumd.cpp:141
+      ld.local.f64         %fd109, [%sd164 + 8];       // gpumd.cpp:141 : (1,$_TA_SCF_22)[$$NI_j_34_G5_T150].L
+      mov.s64              %sd165, $_pvt2_force_T40__f1s361;// gpumd.cpp:141
+      ld.local.f64         %fd110, [%sd165];           // gpumd.cpp:141 : $_pvt2_force_T40[0].L
+      add.rn.f64           %fd111, %fd110, %fd109;     // gpumd.cpp:141
+      mov.s64              %sd166, $_TA_SCF_23__f1s642;// gpumd.cpp:141
+      add.s64              %sd167, %sd162, %sd166;     // gpumd.cpp:141
+      mov.s64              %sd168, $_TA_CND_SPLT_24__f1s643;// gpumd.cpp:141
+      add.s64              %sd169, %sd162, %sd168;     // gpumd.cpp:141
+      st.local.f64         [%sd165], %fd111;           // gpumd.cpp:141 : $_pvt2_force_T40[0].L
+      ld.local.f64         %fd112, [%sd167 + 8];       // gpumd.cpp:141 : (1,$_TA_SCF_23)[$$NI_j_34_G5_T150].L
+      ld.local.f64         %fd113, [%sd165 + 8];       // gpumd.cpp:141 : (1,$_pvt2_force_T40)[0].L
+      add.rn.f64           %fd114, %fd113, %fd112;     // gpumd.cpp:141
+      st.local.f64         [%sd165 + 8], %fd114;       // gpumd.cpp:141 : (1,$_pvt2_force_T40)[0].L
+      ld.local.s64         %sd170, [%sd169 + 8];       // gpumd.cpp:141 : (1,$_TA_CND_SPLT_24)[$$NI_j_34_G5_T150].L
+      setp.ne.s64          %p22, %sd170, 0;            // gpumd.cpp:141
+      @%p22 bra            $main$ck_L101_1__l334__;    // gpumd.cpp:141
+      .loc                 1  141  0
+      cvt.s64.s32          %sd171, %s11;               // gpumd.cpp:141
+      shl.b64              %bd23, %sd171, 3;           // gpumd.cpp:141
+      mov.s32              %s32, 0;                    // gpumd.cpp:141
+      cvt.s64.s32          %sd172, %s32;               // gpumd.cpp:141
+      add.s64              %sd173, %sd172, %bd23;      // gpumd.cpp:141
+      mov.s64              %sd174, $_TA_k_21__f1s640;  // gpumd.cpp:141
+      add.s64              %sd175, %sd173, %sd174;     // gpumd.cpp:141
+      ld.local.s64         %sd176, [%sd175 + 8];       // gpumd.cpp:141 : (1,$_TA_k_21)[$$NI_j_34_G5_T150].L
+      cvt.s32.s64          %s33, %sd176;               // gpumd.cpp:141
+      mov.s64              %sd177, $_TA_x_20__f1s639;  // gpumd.cpp:141
+      add.s64              %sd178, %sd173, %sd177;     // gpumd.cpp:141
+      ld.local.f64         %fd115, [%sd178 + 8];       // gpumd.cpp:141 : (1,$_TA_x_20)[$$NI_j_34_G5_T150].L
+      mul.rn.f64           %fd116, %fd115, 0d4053333333333334;// gpumd.cpp:141
+      shl.b64              %bd24, %sd7, 3;             // gpumd.cpp:141
+      ld.param.s64         %sd179, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:141 : $$arg_ptr_acc_positions_T79_T279
+      add.s64              %sd180, %sd179, %bd24;      // gpumd.cpp:141
+      cvt.s64.s32          %sd181, %s33;               // gpumd.cpp:141
+      shl.b64              %bd25, %sd181, 3;           // gpumd.cpp:141
+      add.s64              %sd182, %sd180, %bd25;      // gpumd.cpp:141
+      add.s64              %sd183, %sd2, %bd25;        // gpumd.cpp:141
+      ld.global.f64        %fd117, [%sd183];           // gpumd.cpp:141 : 0[$$LIS_positions_93_T169,$$GVN_TA_197_T250].L
+      ld.global.f64        %fd118, [%sd182];           // gpumd.cpp:141 : 0[$$arg_ptr_acc_positions_T79_T279 + ($SR_S178 << 3),$$GVN_TA_197_T250].L
+      sub.rn.f64           %fd119, %fd117, %fd118;     // gpumd.cpp:141
+      mul.rn.f64           %fd120, %fd116, %fd119;     // gpumd.cpp:141
+      mov.s64              %sd184, $_TA_cfe_19__f1s638;// gpumd.cpp:141
+      add.s64              %sd185, %sd173, %sd184;     // gpumd.cpp:141
+      ld.local.f64         %fd121, [%sd185 + 8];       // gpumd.cpp:141 : (1,$_TA_cfe_19)[$$NI_j_34_G5_T150].L
+      div.rn.f64           %fd122, %fd120, %fd121;     // gpumd.cpp:141
+      mov.s64              %sd186, $_pvt2_force_T40__f1s361;// gpumd.cpp:141
+      add.s64              %sd187, %sd172, %sd186;     // gpumd.cpp:141
+      add.s64              %sd188, %sd187, %bd25;      // gpumd.cpp:141
+      ld.local.f64         %fd123, [%sd188];           // gpumd.cpp:141 : $_pvt2_force_T40[$$GVN_TA_197_T250].L
+      add.rn.f64           %fd124, %fd123, %fd122;     // gpumd.cpp:141
+      st.local.f64         [%sd188], %fd124;           // gpumd.cpp:141 : $_pvt2_force_T40[$$GVN_TA_197_T250].L
+$main$ck_L101_1__l334__:
+      .loc                 1  141  0
+      add.s64              %sd5, %sd7, 3;              // gpumd.cpp:141 : $$SR_E5_T161
+      add.s64              %sd8, %sd8, 6;              // gpumd.cpp:141 : $$SR_E4_T160
+      .loc                 1  132  0
+      add.s32              %s11, %s11, 2;              // gpumd.cpp:132 : $$NI_j_34_G5_T150
+      add.s64              %sd4, %sd4, 1;              // gpumd.cpp:132 : $$Induc01_J0_T207
+      setp.lt.s64          %p23, %sd4, 0;              // gpumd.cpp:132
+      @%p23 bra            $main$ck_L101_1__l317__;    // gpumd.cpp:132
+$main$ck_L101_1__l335__:
+      .loc                 1  132  0
+      cvt.s64.s32          %sd189, %s11;               // gpumd.cpp:132
+      cvt.s64.s32          %sd190, %s10;               // gpumd.cpp:132
+      setp.ge.s64          %p24, %sd189, %sd190;       // gpumd.cpp:132
+      @%p24 bra            $main$ck_L101_1__l351__;    // gpumd.cpp:132
+      .loc                 1  132  0
+      sub.s32              %s34, %s11, %s10;           // gpumd.cpp:132
+      cvt.s64.s32          %sd4, %s34;                 // gpumd.cpp:132 : $$Induc01_J0_T207
+$main$ck_L101_1__l338__:
+      .loc                 1  133  0
+      cvt.s64.s32          %sd191, %s11;               // gpumd.cpp:133
+      add.s64              %sd192, %sd1, %sd191;       // gpumd.cpp:133
+      cvt.s32.s64          %s35, %sd192;               // gpumd.cpp:133
+      sub.s32              %s36, %s35, %s8;            // gpumd.cpp:133
+      setp.eq.s32          %p25, %s36, 0;              // gpumd.cpp:133
+      @%p25 bra            $main$ck_L101_1__l348__;    // gpumd.cpp:133
+      .loc                 1  136  0
+      cvt.s64.s32          %sd193, %s11;               // gpumd.cpp:136
+      shl.b64              %bd26, %sd193, 3;           // gpumd.cpp:136
+      mov.s32              %s37, 0;                    // gpumd.cpp:136
+      cvt.s64.s32          %sd194, %s37;               // gpumd.cpp:136
+      add.s64              %sd195, %sd194, %bd26;      // gpumd.cpp:136
+      mov.s64              %sd196, $_TA_squared_dist_18__f1s637;// gpumd.cpp:136
+      add.s64              %sd197, %sd195, %sd196;     // gpumd.cpp:136
+      ld.local.f64         %fd125, [%sd197];           // gpumd.cpp:136 : $_TA_squared_dist_18[$$NI_j_34_G5_T150].L
+      sqrt.rn.f64          %fd126, %fd125;             // gpumd.cpp:136
+      setp.ge.f64          %p26, %fd126, 0d4020000000000000;// gpumd.cpp:136
+      @%p26 bra            $main$ck_L101_1__l348__;    // gpumd.cpp:136
+      .loc                 1  141  0
+      cvt.s64.s32          %sd198, %s11;               // gpumd.cpp:141
+      shl.b64              %bd27, %sd198, 3;           // gpumd.cpp:141
+      mov.s32              %s38, 0;                    // gpumd.cpp:141
+      cvt.s64.s32          %sd199, %s38;               // gpumd.cpp:141
+      add.s64              %sd200, %sd199, %bd27;      // gpumd.cpp:141
+      mov.s64              %sd201, $_TA_SCF_22__f1s641;// gpumd.cpp:141
+      add.s64              %sd202, %sd200, %sd201;     // gpumd.cpp:141
+      ld.local.f64         %fd127, [%sd202];           // gpumd.cpp:141 : $_TA_SCF_22[$$NI_j_34_G5_T150].L
+      mov.s64              %sd203, $_pvt2_force_T40__f1s361;// gpumd.cpp:141
+      ld.local.f64         %fd128, [%sd203];           // gpumd.cpp:141 : $_pvt2_force_T40[0].L
+      add.rn.f64           %fd129, %fd128, %fd127;     // gpumd.cpp:141
+      mov.s64              %sd204, $_TA_SCF_23__f1s642;// gpumd.cpp:141
+      add.s64              %sd205, %sd200, %sd204;     // gpumd.cpp:141
+      mov.s64              %sd206, $_TA_CND_SPLT_24__f1s643;// gpumd.cpp:141
+      add.s64              %sd207, %sd200, %sd206;     // gpumd.cpp:141
+      st.local.f64         [%sd203], %fd129;           // gpumd.cpp:141 : $_pvt2_force_T40[0].L
+      ld.local.f64         %fd130, [%sd205];           // gpumd.cpp:141 : $_TA_SCF_23[$$NI_j_34_G5_T150].L
+      ld.local.f64         %fd131, [%sd203 + 8];       // gpumd.cpp:141 : (1,$_pvt2_force_T40)[0].L
+      add.rn.f64           %fd132, %fd131, %fd130;     // gpumd.cpp:141
+      st.local.f64         [%sd203 + 8], %fd132;       // gpumd.cpp:141 : (1,$_pvt2_force_T40)[0].L
+      ld.local.s64         %sd208, [%sd207];           // gpumd.cpp:141 : $_TA_CND_SPLT_24[$$NI_j_34_G5_T150].L
+      setp.ne.s64          %p27, %sd208, 0;            // gpumd.cpp:141
+      @%p27 bra            $main$ck_L101_1__l348__;    // gpumd.cpp:141
+      .loc                 1  141  0
+      cvt.s64.s32          %sd209, %s11;               // gpumd.cpp:141
+      shl.b64              %bd28, %sd209, 3;           // gpumd.cpp:141
+      mov.s32              %s39, 0;                    // gpumd.cpp:141
+      cvt.s64.s32          %sd210, %s39;               // gpumd.cpp:141
+      add.s64              %sd211, %sd210, %bd28;      // gpumd.cpp:141
+      mov.s64              %sd212, $_TA_k_21__f1s640;  // gpumd.cpp:141
+      add.s64              %sd213, %sd211, %sd212;     // gpumd.cpp:141
+      ld.local.s64         %sd214, [%sd213];           // gpumd.cpp:141 : $_TA_k_21[$$NI_j_34_G5_T150].L
+      cvt.s32.s64          %s40, %sd214;               // gpumd.cpp:141
+      mov.s64              %sd215, $_TA_x_20__f1s639;  // gpumd.cpp:141
+      add.s64              %sd216, %sd211, %sd215;     // gpumd.cpp:141
+      ld.local.f64         %fd133, [%sd216];           // gpumd.cpp:141 : $_TA_x_20[$$NI_j_34_G5_T150].L
+      mul.rn.f64           %fd134, %fd133, 0d4053333333333334;// gpumd.cpp:141
+      shl.b64              %bd29, %sd5, 3;             // gpumd.cpp:141
+      ld.param.s64         %sd217, [$$arg_ptr_acc_positions_T79_T279];// gpumd.cpp:141 : $$arg_ptr_acc_positions_T79_T279
+      add.s64              %sd218, %sd217, %bd29;      // gpumd.cpp:141
+      cvt.s64.s32          %sd219, %s40;               // gpumd.cpp:141
+      shl.b64              %bd30, %sd219, 3;           // gpumd.cpp:141
+      add.s64              %sd220, %sd218, %bd30;      // gpumd.cpp:141
+      add.s64              %sd221, %sd2, %bd30;        // gpumd.cpp:141
+      ld.global.f64        %fd135, [%sd221];           // gpumd.cpp:141 : 0[$$LIS_positions_93_T169,$$GVN_TA_196_T249].L
+      ld.global.f64        %fd136, [%sd220];           // gpumd.cpp:141 : 0[$$arg_ptr_acc_positions_T79_T279 + ($$SR_E5_T161 << 3),$$GVN_TA_196_T249].L
+      sub.rn.f64           %fd137, %fd135, %fd136;     // gpumd.cpp:141
+      mul.rn.f64           %fd138, %fd134, %fd137;     // gpumd.cpp:141
+      mov.s64              %sd222, $_TA_cfe_19__f1s638;// gpumd.cpp:141
+      add.s64              %sd223, %sd211, %sd222;     // gpumd.cpp:141
+      ld.local.f64         %fd139, [%sd223];           // gpumd.cpp:141 : $_TA_cfe_19[$$NI_j_34_G5_T150].L
+      div.rn.f64           %fd140, %fd138, %fd139;     // gpumd.cpp:141
+      mov.s64              %sd224, $_pvt2_force_T40__f1s361;// gpumd.cpp:141
+      add.s64              %sd225, %sd210, %sd224;     // gpumd.cpp:141
+      add.s64              %sd226, %sd225, %bd30;      // gpumd.cpp:141
+      ld.local.f64         %fd141, [%sd226];           // gpumd.cpp:141 : $_pvt2_force_T40[$$GVN_TA_196_T249].L
+      add.rn.f64           %fd142, %fd141, %fd140;     // gpumd.cpp:141
+      st.local.f64         [%sd226], %fd142;           // gpumd.cpp:141 : $_pvt2_force_T40[$$GVN_TA_196_T249].L
+$main$ck_L101_1__l348__:
+      .loc                 1  141  0
+      add.s64              %sd8, %sd8, 3;              // gpumd.cpp:141 : $$SR_E4_T160
+      add.s64              %sd5, %sd5, 3;              // gpumd.cpp:141 : $$SR_E5_T161
+      .loc                 1  132  0
+      add.s32              %s11, %s11, 1;              // gpumd.cpp:132 : $$NI_j_34_G5_T150
+      add.s64              %sd4, %sd4, 1;              // gpumd.cpp:132 : $$Induc01_J0_T207
+      setp.lt.s64          %p28, %sd4, 0;              // gpumd.cpp:132
+      @%p28 bra            $main$ck_L101_1__l338__;    // gpumd.cpp:132
+$main$ck_L101_1__l351__:
+      .loc                 1  134  0
+      add.s32              %s6, %s6, 768;              // gpumd.cpp:134 : $$SR_E6_T162
+      .loc                 1  133  0
+      add.s64              %sd1, %sd1, 256;            // gpumd.cpp:133 : $$SR_E7_T163
+      .loc                 1  132  0
+      add.s32              %s5, %s5, 1;                // gpumd.cpp:132 : $$I_j_50_T151
+      add.s64              %sd9, %sd9, 1;              // gpumd.cpp:132 : $$Induc02_J1_T208
+      setp.lt.s64          %p29, %sd9, 0;              // gpumd.cpp:132
+      @%p29 bra            $main$ck_L101_1__l302__;    // gpumd.cpp:132
+      .loc                 1  148  0
+      mov.s64              %sd227, $_pvt2_force_T40__f1s361;// gpumd.cpp:148
+      ld.local.f64         %fd143, [%sd227];           // gpumd.cpp:148 : $_pvt2_force_T40[0].L
+      mul.rn.f64           %fd144, %fd143, 0d3fd0000000000000;// gpumd.cpp:148
+      ld.param.s64         %sd228, [$$arg_ptr_acc_accelerations_T75_T277];// gpumd.cpp:148 : $$arg_ptr_acc_accelerations_T75_T277
+      cvt.s64.s32          %sd229, %s3;                // gpumd.cpp:148
+      shl.b64              %bd31, %sd229, 3;           // gpumd.cpp:148
+      add.s64              %sd230, %sd228, %bd31;      // gpumd.cpp:148
+      .loc                 1  149  0
+      mov.s64              %sd231, $_pvt2_prev_acceleration_T39__f1s360;// gpumd.cpp:149
+      .loc                 1  148  0
+      st.global.f64        [%sd230], %fd144;           // gpumd.cpp:148 : 0[$$arg_ptr_acc_accelerations_T75_T277,$$SR_E8_T164].L
+      .loc                 1  149  0
+      ld.local.f64         %fd145, [%sd231];           // gpumd.cpp:149 : $_pvt2_prev_acceleration_T39[0].L
+      ld.param.s64         %sd232, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:149 : $$arg_ptr_acc_velocities_T77_T278
+      add.rn.f64           %fd146, %fd145, %fd144;     // gpumd.cpp:149
+      mul.rn.f64           %fd147, %fd5, %fd146;       // gpumd.cpp:149
+      add.s64              %sd233, %sd232, %bd31;      // gpumd.cpp:149
+      ld.global.f64        %fd148, [%sd233];           // gpumd.cpp:149 : 0[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      mad.rn.f64           %fd149, 0d3fe0000000000000, %fd147, %fd148;// gpumd.cpp:149
+      .loc                 1  152  0
+      mul.rn.f64           %fd150, %fd149, %fd149;     // gpumd.cpp:152
+      .loc                 1  149  0
+      st.global.f64        [%sd233], %fd149;           // gpumd.cpp:149 : 0[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      .loc                 1  148  0
+      ld.local.f64         %fd151, [%sd227 + 8];       // gpumd.cpp:148 : (1,$_pvt2_force_T40)[0].L
+      mul.rn.f64           %fd152, %fd151, 0d3fd0000000000000;// gpumd.cpp:148
+      st.global.f64        [%sd230 + 8], %fd152;       // gpumd.cpp:148 : 1[$$arg_ptr_acc_accelerations_T75_T277,$$SR_E8_T164].L
+      .loc                 1  149  0
+      ld.local.f64         %fd153, [%sd231 + 8];       // gpumd.cpp:149 : (1,$_pvt2_prev_acceleration_T39)[0].L
+      ld.global.f64        %fd154, [%sd233 + 8];       // gpumd.cpp:149 : 1[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      add.rn.f64           %fd155, %fd153, %fd152;     // gpumd.cpp:149
+      mul.rn.f64           %fd156, %fd5, %fd155;       // gpumd.cpp:149
+      mad.rn.f64           %fd157, 0d3fe0000000000000, %fd156, %fd154;// gpumd.cpp:149
+      .loc                 1  152  0
+      mad.rn.f64           %fd158, %fd157, %fd157, %fd150;// gpumd.cpp:152
+      .loc                 1  149  0
+      st.global.f64        [%sd233 + 8], %fd157;       // gpumd.cpp:149 : 1[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      .loc                 1  148  0
+      ld.local.f64         %fd159, [%sd227 + 16];      // gpumd.cpp:148 : (2,$_pvt2_force_T40)[0].L
+      mul.rn.f64           %fd160, %fd159, 0d3fd0000000000000;// gpumd.cpp:148
+      st.global.f64        [%sd230 + 16], %fd160;      // gpumd.cpp:148 : 2[$$arg_ptr_acc_accelerations_T75_T277,$$SR_E8_T164].L
+      .loc                 1  149  0
+      ld.local.f64         %fd161, [%sd231 + 16];      // gpumd.cpp:149 : (2,$_pvt2_prev_acceleration_T39)[0].L
+      ld.global.f64        %fd162, [%sd233 + 16];      // gpumd.cpp:149 : 2[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      add.rn.f64           %fd163, %fd161, %fd160;     // gpumd.cpp:149
+      mul.rn.f64           %fd164, %fd5, %fd163;       // gpumd.cpp:149
+      mad.rn.f64           %fd165, 0d3fe0000000000000, %fd164, %fd162;// gpumd.cpp:149
+      st.global.f64        [%sd233 + 16], %fd165;      // gpumd.cpp:149 : 2[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      mov.f64              %fd16, %fd165;              // gpumd.cpp:149 : $$GVN_velocities_167_T220
+      .loc                 1  152  0
+      mad.rn.f64           %fd166, %fd165, %fd165, %fd158;// gpumd.cpp:152
+      sqrt.rn.f64          %fd167, %fd166;             // gpumd.cpp:152
+      setp.le.f64          %p30, %fd167, 0d40dd4c0000000000;// gpumd.cpp:152
+      @%p30 bra            $main$ck_L101_1__l357__;    // gpumd.cpp:152
+      .loc                 1  154  0
+      ld.param.s64         %sd234, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:154 : $$arg_ptr_acc_velocities_T77_T278
+      cvt.s64.s32          %sd235, %s3;                // gpumd.cpp:154
+      shl.b64              %bd32, %sd235, 3;           // gpumd.cpp:154
+      add.s64              %sd236, %sd234, %bd32;      // gpumd.cpp:154
+      ld.global.f64        %fd168, [%sd236 + 8];       // gpumd.cpp:154 : 1[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      ld.global.f64        %fd169, [%sd236];           // gpumd.cpp:154 : 0[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      mul.rn.f64           %fd170, %fd168, %fd168;     // gpumd.cpp:154
+      mad.rn.f64           %fd171, %fd169, %fd169, %fd170;// gpumd.cpp:154
+      mul.rn.f64           %fd172, %fd16, %fd16;       // gpumd.cpp:154
+      add.rn.f64           %fd173, %fd171, %fd172;     // gpumd.cpp:154
+      .loc                 1  155  0
+      sqrt.rn.f64          %fd174, %fd173;             // gpumd.cpp:155
+      mul.rn.f64           %fd175, %fd174, 0d3f2a36e2eb1c432d;// gpumd.cpp:155
+      rcp.rn.f64           %fd176, %fd175;             // gpumd.cpp:155
+      mul.rn.f64           %fd177, %fd169, %fd176;     // gpumd.cpp:155
+      st.global.f64        [%sd236], %fd177;           // gpumd.cpp:155 : 0[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      .loc                 1  156  0
+      ld.global.f64        %fd178, [%sd236 + 8];       // gpumd.cpp:156 : 1[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      mul.rn.f64           %fd179, %fd178, %fd176;     // gpumd.cpp:156
+      st.global.f64        [%sd236 + 8], %fd179;       // gpumd.cpp:156 : 1[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      .loc                 1  157  0
+      ld.global.f64        %fd180, [%sd236 + 16];      // gpumd.cpp:157 : 2[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      mul.rn.f64           %fd181, %fd180, %fd176;     // gpumd.cpp:157
+      st.global.f64        [%sd236 + 16], %fd181;      // gpumd.cpp:157 : 2[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+$main$ck_L101_1__l357__:
+      .loc                 1  160  0
+      cvt.s64.s32          %sd237, %s3;                // gpumd.cpp:160
+      shl.b64              %bd33, %sd237, 3;           // gpumd.cpp:160
+      ld.param.s64         %sd238, [$$arg_ptr_acc_velocities_T77_T278];// gpumd.cpp:160 : $$arg_ptr_acc_velocities_T77_T278
+      add.s64              %sd239, %sd238, %bd33;      // gpumd.cpp:160
+      ld.global.f64        %fd182, [%sd239 + 8];       // gpumd.cpp:160 : 1[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      mul.rn.f64           %fd183, %fd182, %fd182;     // gpumd.cpp:160
+      ld.global.f64        %fd184, [%sd239];           // gpumd.cpp:160 : 0[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      mad.rn.f64           %fd185, %fd184, %fd184, %fd183;// gpumd.cpp:160
+      ld.global.f64        %fd186, [%sd239 + 16];      // gpumd.cpp:160 : 2[$$arg_ptr_acc_velocities_T77_T278,$$SR_E8_T164].L
+      mul.rn.f64           %fd187, %fd186, %fd186;     // gpumd.cpp:160
+      add.rn.f64           %fd188, %fd185, %fd187;     // gpumd.cpp:160
+      sqrt.rn.f64          %fd189, %fd188;             // gpumd.cpp:160
+      add.rn.f64           %fd17, %fd17, %fd189;       // gpumd.cpp:160 : $_pvt2_speed_sum_T47
+      .loc                 1  161  0
+      mad.rn.f64           %fd18, 0d4000000000000000, %fd188, %fd18;// gpumd.cpp:161 : $_pvt2_total_kinetic_energy_T46
+      .loc                 1  108  0
+      add.s32              %s3, %s3, %s12;             // gpumd.cpp:108 : $$SR_E8_T164
+      .loc                 1  101  0
+      add.s32              %s4, %s2, %s4;              // gpumd.cpp:101 : $$I_i_44_T149
+      setp.lt.s32          %p31, %s4, 16000;           // gpumd.cpp:101
+      @%p31 bra            $main$ck_L101_1__l269__;    // gpumd.cpp:101
+$main$ck_L101_1__l358__:
+      .loc                 1  147  0
+      ld.param.s64         %sd240, [$$arg_ptr_acc_j_T89_T283];// gpumd.cpp:147 : $$arg_ptr_acc_j_T89_T283
+      st.global.s32        [%sd240], 3;                // gpumd.cpp:147 : 0[$$arg_ptr_acc_j_T89_T283,0]
+      .loc                 1  162  0
+      mov.u32              %u12, %tid.x;               // gpumd.cpp:162
+      cvt.u64.u32          %ud1, %tid.x;               // gpumd.cpp:162
+      shl.b64              %bd34, %ud1, 3;             // gpumd.cpp:162
+      mov.s64              %sd241, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd242, %sd241, %bd34;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd242], %fd18;          // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_220_T264].L
+      bar.sync             0;                          // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd19, [%sd242];          // gpumd.cpp:162 : $redfold_left_temp_T195
+      setp.ge.u32          %p32, %u12, 64;             // gpumd.cpp:162
+      @%p32 bra            $main$ck_L101_1__l361__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd243, %tid.x;             // gpumd.cpp:162
+      shl.b64              %bd35, %sd243, 3;           // gpumd.cpp:162
+      mov.s64              %sd244, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd245, %sd244, %bd35;      // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd190, [%sd245 + 512];   // gpumd.cpp:162 : 64[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd19, %fd19, %fd190;       // gpumd.cpp:162 : $redfold_left_temp_T195
+      cvt.u64.u32          %ud2, %tid.x;               // gpumd.cpp:162
+      shl.b64              %bd36, %ud2, 3;             // gpumd.cpp:162
+      add.s64              %sd246, %sd244, %bd36;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd246], %fd19;          // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) _acc_read_hw_reg(%tid.x)].L
+$main$ck_L101_1__l361__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      mov.u32              %u13, %tid.x;               // gpumd.cpp:162
+      setp.ge.u32          %p33, %u13, 32;             // gpumd.cpp:162
+      @%p33 bra            $main$ck_L101_1__l364__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd247, %tid.x;             // gpumd.cpp:162
+      shl.b64              %bd37, %sd247, 3;           // gpumd.cpp:162
+      mov.s64              %sd248, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd249, %sd248, %bd37;      // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd191, [%sd249 + 256];   // gpumd.cpp:162 : 32[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd192, %fd19, %fd191;      // gpumd.cpp:162
+      mov.f64              %fd19, %fd192;              // gpumd.cpp:162 : $redfold_left_temp_T195
+      cvt.u64.u32          %ud3, %tid.x;               // gpumd.cpp:162
+      shl.b64              %bd38, %ud3, 3;             // gpumd.cpp:162
+      add.s64              %sd250, %sd248, %bd38;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd250], %fd192;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_221_T265].L
+      ld.volatile.shared.f64 %fd193, [%sd249 + 128];   // gpumd.cpp:162 : 16[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd194, %fd192, %fd193;     // gpumd.cpp:162
+      mov.f64              %fd19, %fd194;              // gpumd.cpp:162 : $redfold_left_temp_T195
+      st.volatile.shared.f64 [%sd250], %fd194;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_221_T265].L
+      ld.volatile.shared.f64 %fd195, [%sd249 + 64];    // gpumd.cpp:162 : 8[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd196, %fd194, %fd195;     // gpumd.cpp:162
+      mov.f64              %fd19, %fd196;              // gpumd.cpp:162 : $redfold_left_temp_T195
+      st.volatile.shared.f64 [%sd250], %fd196;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_221_T265].L
+      ld.volatile.shared.f64 %fd197, [%sd249 + 32];    // gpumd.cpp:162 : 4[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd198, %fd196, %fd197;     // gpumd.cpp:162
+      mov.f64              %fd19, %fd198;              // gpumd.cpp:162 : $redfold_left_temp_T195
+      st.volatile.shared.f64 [%sd250], %fd198;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_221_T265].L
+      ld.volatile.shared.f64 %fd199, [%sd249 + 16];    // gpumd.cpp:162 : 2[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd200, %fd198, %fd199;     // gpumd.cpp:162
+      mov.f64              %fd19, %fd200;              // gpumd.cpp:162 : $redfold_left_temp_T195
+      st.volatile.shared.f64 [%sd250], %fd200;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_221_T265].L
+      ld.volatile.shared.f64 %fd201, [%sd249 + 8];     // gpumd.cpp:162 : 1[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd202, %fd200, %fd201;     // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd250], %fd202;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_221_T265].L
+      mov.f64              %fd19, %fd202;              // gpumd.cpp:162 : $redfold_left_temp_T195
+$main$ck_L101_1__l364__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      mov.s64              %sd251, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      ld.volatile.shared.f64 %fd203, [%sd251];         // gpumd.cpp:162 : 0[_&$$_redfold_T194,0].L
+      bar.sync             0;                          // gpumd.cpp:162
+      add.rn.f64           %fd20, %fd20, %fd203;       // gpumd.cpp:162 : $_pvt2_total_kinetic_energy_T48
+      mov.u32              %u14, %tid.x;               // gpumd.cpp:162
+      cvt.u64.u32          %ud4, %tid.x;               // gpumd.cpp:162
+      shl.b64              %bd39, %ud4, 3;             // gpumd.cpp:162
+      add.s64              %sd252, %sd251, %bd39;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd252], %fd17;          // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_222_T266].L
+      bar.sync             0;                          // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd21, [%sd252];          // gpumd.cpp:162 : $redfold_left_temp_T198
+      setp.ge.u32          %p34, %u14, 64;             // gpumd.cpp:162
+      @%p34 bra            $main$ck_L101_1__l367__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd253, %tid.x;             // gpumd.cpp:162
+      shl.b64              %bd40, %sd253, 3;           // gpumd.cpp:162
+      mov.s64              %sd254, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd255, %sd254, %bd40;      // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd204, [%sd255 + 512];   // gpumd.cpp:162 : 64[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd21, %fd21, %fd204;       // gpumd.cpp:162 : $redfold_left_temp_T198
+      cvt.u64.u32          %ud5, %tid.x;               // gpumd.cpp:162
+      shl.b64              %bd41, %ud5, 3;             // gpumd.cpp:162
+      add.s64              %sd256, %sd254, %bd41;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd256], %fd21;          // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) _acc_read_hw_reg(%tid.x)].L
+$main$ck_L101_1__l367__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      mov.u32              %u15, %tid.x;               // gpumd.cpp:162
+      setp.ge.u32          %p35, %u15, 32;             // gpumd.cpp:162
+      @%p35 bra            $main$ck_L101_1__l370__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd257, %tid.x;             // gpumd.cpp:162
+      shl.b64              %bd42, %sd257, 3;           // gpumd.cpp:162
+      mov.s64              %sd258, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd259, %sd258, %bd42;      // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd205, [%sd259 + 256];   // gpumd.cpp:162 : 32[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd206, %fd21, %fd205;      // gpumd.cpp:162
+      mov.f64              %fd21, %fd206;              // gpumd.cpp:162 : $redfold_left_temp_T198
+      cvt.u64.u32          %ud6, %tid.x;               // gpumd.cpp:162
+      shl.b64              %bd43, %ud6, 3;             // gpumd.cpp:162
+      add.s64              %sd260, %sd258, %bd43;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd260], %fd206;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_223_T267].L
+      ld.volatile.shared.f64 %fd207, [%sd259 + 128];   // gpumd.cpp:162 : 16[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd208, %fd206, %fd207;     // gpumd.cpp:162
+      mov.f64              %fd21, %fd208;              // gpumd.cpp:162 : $redfold_left_temp_T198
+      st.volatile.shared.f64 [%sd260], %fd208;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_223_T267].L
+      ld.volatile.shared.f64 %fd209, [%sd259 + 64];    // gpumd.cpp:162 : 8[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd210, %fd208, %fd209;     // gpumd.cpp:162
+      mov.f64              %fd21, %fd210;              // gpumd.cpp:162 : $redfold_left_temp_T198
+      st.volatile.shared.f64 [%sd260], %fd210;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_223_T267].L
+      ld.volatile.shared.f64 %fd211, [%sd259 + 32];    // gpumd.cpp:162 : 4[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd212, %fd210, %fd211;     // gpumd.cpp:162
+      mov.f64              %fd21, %fd212;              // gpumd.cpp:162 : $redfold_left_temp_T198
+      st.volatile.shared.f64 [%sd260], %fd212;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_223_T267].L
+      ld.volatile.shared.f64 %fd213, [%sd259 + 16];    // gpumd.cpp:162 : 2[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd214, %fd212, %fd213;     // gpumd.cpp:162
+      mov.f64              %fd21, %fd214;              // gpumd.cpp:162 : $redfold_left_temp_T198
+      st.volatile.shared.f64 [%sd260], %fd214;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_223_T267].L
+      ld.volatile.shared.f64 %fd215, [%sd259 + 8];     // gpumd.cpp:162 : 1[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd216, %fd214, %fd215;     // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd260], %fd216;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_223_T267].L
+      mov.f64              %fd21, %fd216;              // gpumd.cpp:162 : $redfold_left_temp_T198
+$main$ck_L101_1__l370__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      mov.s64              %sd261, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      ld.volatile.shared.f64 %fd217, [%sd261];         // gpumd.cpp:162 : 0[_&$$_redfold_T194,0].L
+      bar.sync             0;                          // gpumd.cpp:162
+      add.rn.f64           %fd22, %fd22, %fd217;       // gpumd.cpp:162 : $_pvt2_speed_sum_T49
+      setp.ne.u32          %p36, %u1, 0;               // gpumd.cpp:162
+      selp.u32             %u3, 1, 0, %p36;            // gpumd.cpp:162 : $$GVN_158_T211
+      @%p36 bra            $main$ck_L101_1__l373__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.u64.u32          %ud7, %u2;                  // gpumd.cpp:162
+      shl.b64              %bd44, %ud7, 3;             // gpumd.cpp:162
+      ld.param.s64         %sd262, [$$arg_ptr_reduc_val_T125_T287];// gpumd.cpp:162 : $$arg_ptr_reduc_val_T125_T287
+      add.s64              %sd263, %sd262, %bd44;      // gpumd.cpp:162
+      st.global.f64        [%sd263], %fd20;            // gpumd.cpp:162 : 0[$$arg_ptr_reduc_val_T125_T287,.(long) .(unsigned long) $$GVN_159_T212].L
+$main$ck_L101_1__l373__:
+      .loc                 1  162  0
+      membar.gl;                                       // gpumd.cpp:162
+      setp.ne.u32          %p37, %u3, 0;               // gpumd.cpp:162
+      @%p37 bra            $main$ck_L101_1__l376__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      sub.s32              %s41, 1, %u4;               // gpumd.cpp:162
+      setp.eq.u32          %p38, %u2, 0;               // gpumd.cpp:162
+      selp.s32             %s42, %s41, 1, %p38;        // gpumd.cpp:162
+      ld.param.s64         %sd264, [$$arg_ptr_reduc_ctl_T121_T285];// gpumd.cpp:162 : $$arg_ptr_reduc_ctl_T121_T285
+      atom.global.add.s32  %s43, [%sd264], %s42;       // gpumd.cpp:162
+      add.s32              %s44, %s42, %s43;           // gpumd.cpp:162
+      st.volatile.shared.s32 [reduc_share_ctl_C2__f1s663], %s44;// gpumd.cpp:162 : reduc_share_ctl_C2
+$main$ck_L101_1__l376__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      ld.volatile.shared.s32 %s45, [reduc_share_ctl_C2__f1s663];// gpumd.cpp:162 : reduc_share_ctl_C2
+      setp.ne.s32          %p39, %s45, 0;              // gpumd.cpp:162
+      @%p39 bra            $main$ck_L101_1__l395__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      mov.f64              %fd23, 0d0000000000000000;  // gpumd.cpp:162 : $$reduc_pvt_T124_T286
+      mov.s32              %s13, %u1;                  // gpumd.cpp:162 : $$INDUC_P25_T152
+      setp.ge.u32          %p40, %u1, %u4;             // gpumd.cpp:162
+      @%p40 bra            $main$ck_L101_1__l386__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd10, %u4;                 // gpumd.cpp:162 : $$T_INDUC_P25_H2_T156
+      mov.u32              %u6, %u5;                   // gpumd.cpp:162 : $$LIS_90_T166
+$main$ck_L101_1__l382__:
+      .loc                 1  162  0
+      cvt.s64.s32          %sd265, %s13;               // gpumd.cpp:162
+      shl.b64              %bd45, %sd265, 3;           // gpumd.cpp:162
+      ld.param.s64         %sd266, [$$arg_ptr_reduc_val_T125_T287];// gpumd.cpp:162 : $$arg_ptr_reduc_val_T125_T287
+      add.s64              %sd267, %sd266, %bd45;      // gpumd.cpp:162
+      ld.global.f64        %fd218, [%sd267];           // gpumd.cpp:162 : 0[$$arg_ptr_reduc_val_T125_T287,.(long) $$INDUC_P25_T152].L
+      add.rn.f64           %fd23, %fd23, %fd218;       // gpumd.cpp:162 : $$reduc_pvt_T124_T286
+      add.u32              %s13, %s13, %u6;            // gpumd.cpp:162 : $$INDUC_P25_T152
+      cvt.s64.s32          %sd268, %s13;               // gpumd.cpp:162
+      setp.lt.s64          %p41, %sd268, %sd10;        // gpumd.cpp:162
+      @%p41 bra            $main$ck_L101_1__l382__;    // gpumd.cpp:162
+$main$ck_L101_1__l386__:
+      .loc                 1  162  0
+      cvt.u64.u32          %ud8, %tid.x;               // gpumd.cpp:162
+      shl.b64              %bd46, %ud8, 3;             // gpumd.cpp:162
+      mov.s64              %sd269, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd270, %sd269, %bd46;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd270], %fd23;          // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) _acc_read_hw_reg(%tid.x)].L
+      bar.sync             0;                          // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd24, [%sd270];          // gpumd.cpp:162 : $redfold_left_temp_T201
+      mov.u32              %u16, %tid.x;               // gpumd.cpp:162
+      setp.ge.u32          %p42, %u16, 64;             // gpumd.cpp:162
+      @%p42 bra            $main$ck_L101_1__l389__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd271, %tid.x;             // gpumd.cpp:162
+      shl.b64              %bd47, %sd271, 3;           // gpumd.cpp:162
+      mov.s64              %sd272, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd273, %sd272, %bd47;      // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd219, [%sd273 + 512];   // gpumd.cpp:162 : 64[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd24, %fd24, %fd219;       // gpumd.cpp:162 : $redfold_left_temp_T201
+      cvt.u64.u32          %ud9, %tid.x;               // gpumd.cpp:162
+      shl.b64              %bd48, %ud9, 3;             // gpumd.cpp:162
+      add.s64              %sd274, %sd272, %bd48;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd274], %fd24;          // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) _acc_read_hw_reg(%tid.x)].L
+$main$ck_L101_1__l389__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      mov.u32              %u17, %tid.x;               // gpumd.cpp:162
+      setp.ge.u32          %p43, %u17, 32;             // gpumd.cpp:162
+      @%p43 bra            $main$ck_L101_1__l392__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd275, %tid.x;             // gpumd.cpp:162
+      shl.b64              %bd49, %sd275, 3;           // gpumd.cpp:162
+      mov.s64              %sd276, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd277, %sd276, %bd49;      // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd220, [%sd277 + 256];   // gpumd.cpp:162 : 32[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd221, %fd24, %fd220;      // gpumd.cpp:162
+      mov.f64              %fd24, %fd221;              // gpumd.cpp:162 : $redfold_left_temp_T201
+      cvt.u64.u32          %ud10, %tid.x;              // gpumd.cpp:162
+      shl.b64              %bd50, %ud10, 3;            // gpumd.cpp:162
+      add.s64              %sd278, %sd276, %bd50;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd278], %fd221;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_224_T268].L
+      ld.volatile.shared.f64 %fd222, [%sd277 + 128];   // gpumd.cpp:162 : 16[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd223, %fd221, %fd222;     // gpumd.cpp:162
+      mov.f64              %fd24, %fd223;              // gpumd.cpp:162 : $redfold_left_temp_T201
+      st.volatile.shared.f64 [%sd278], %fd223;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_224_T268].L
+      ld.volatile.shared.f64 %fd224, [%sd277 + 64];    // gpumd.cpp:162 : 8[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd225, %fd223, %fd224;     // gpumd.cpp:162
+      mov.f64              %fd24, %fd225;              // gpumd.cpp:162 : $redfold_left_temp_T201
+      st.volatile.shared.f64 [%sd278], %fd225;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_224_T268].L
+      ld.volatile.shared.f64 %fd226, [%sd277 + 32];    // gpumd.cpp:162 : 4[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd227, %fd225, %fd226;     // gpumd.cpp:162
+      mov.f64              %fd24, %fd227;              // gpumd.cpp:162 : $redfold_left_temp_T201
+      st.volatile.shared.f64 [%sd278], %fd227;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_224_T268].L
+      ld.volatile.shared.f64 %fd228, [%sd277 + 16];    // gpumd.cpp:162 : 2[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd229, %fd227, %fd228;     // gpumd.cpp:162
+      mov.f64              %fd24, %fd229;              // gpumd.cpp:162 : $redfold_left_temp_T201
+      st.volatile.shared.f64 [%sd278], %fd229;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_224_T268].L
+      ld.volatile.shared.f64 %fd230, [%sd277 + 8];     // gpumd.cpp:162 : 1[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd231, %fd229, %fd230;     // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd278], %fd231;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_224_T268].L
+      mov.f64              %fd24, %fd231;              // gpumd.cpp:162 : $redfold_left_temp_T201
+$main$ck_L101_1__l392__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      mov.s64              %sd279, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      ld.volatile.shared.f64 %fd25, [%sd279];          // gpumd.cpp:162 : $redfinal_T203
+      bar.sync             0;                          // gpumd.cpp:162
+      setp.ne.u32          %p44, %u3, 0;               // gpumd.cpp:162
+      @%p44 bra            $main$ck_L101_1__l395__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      ld.param.s64         %sd280, [$$arg_ptr_acc_total_kinetic_energy_T71_T275];// gpumd.cpp:162 : $$arg_ptr_acc_total_kinetic_energy_T71_T275
+      ld.global.f64        %fd232, [%sd280];           // gpumd.cpp:162 : 0[$$arg_ptr_acc_total_kinetic_energy_T71_T275,0].L
+      add.rn.f64           %fd233, %fd232, %fd25;      // gpumd.cpp:162
+      st.global.f64        [%sd280], %fd233;           // gpumd.cpp:162 : 0[$$arg_ptr_acc_total_kinetic_energy_T71_T275,0].L
+$main$ck_L101_1__l395__:
+      .loc                 1  162  0
+      setp.ne.u32          %p45, %u3, 0;               // gpumd.cpp:162
+      @%p45 bra            $main$ck_L101_1__l398__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.u64.u32          %ud11, %u2;                 // gpumd.cpp:162
+      shl.b64              %bd51, %ud11, 3;            // gpumd.cpp:162
+      ld.param.s64         %sd281, [$$arg_ptr_reduc_val_T134_T290];// gpumd.cpp:162 : $$arg_ptr_reduc_val_T134_T290
+      add.s64              %sd282, %sd281, %bd51;      // gpumd.cpp:162
+      st.global.f64        [%sd282], %fd22;            // gpumd.cpp:162 : 0[$$arg_ptr_reduc_val_T134_T290,.(long) .(unsigned long) $$GVN_159_T212].L
+$main$ck_L101_1__l398__:
+      .loc                 1  162  0
+      membar.gl;                                       // gpumd.cpp:162
+      setp.ne.u32          %p46, %u3, 0;               // gpumd.cpp:162
+      @%p46 bra            $main$ck_L101_1__l401__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      sub.s32              %s46, 1, %u4;               // gpumd.cpp:162
+      setp.eq.u32          %p47, %u2, 0;               // gpumd.cpp:162
+      selp.s32             %s47, %s46, 1, %p47;        // gpumd.cpp:162
+      ld.param.s64         %sd283, [$$arg_ptr_reduc_ctl_T130_T288];// gpumd.cpp:162 : $$arg_ptr_reduc_ctl_T130_T288
+      atom.global.add.s32  %s48, [%sd283], %s47;       // gpumd.cpp:162
+      add.s32              %s49, %s47, %s48;           // gpumd.cpp:162
+      st.volatile.shared.s32 [reduc_share_ctl_C2__f1s675], %s49;// gpumd.cpp:162 : reduc_share_ctl_C2
+$main$ck_L101_1__l401__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      ld.volatile.shared.s32 %s50, [reduc_share_ctl_C2__f1s675];// gpumd.cpp:162 : reduc_share_ctl_C2
+      setp.ne.s32          %p48, %s50, 0;              // gpumd.cpp:162
+      @%p48 bra            $main$ck_L101_1__l420__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      mov.f64              %fd26, 0d0000000000000000;  // gpumd.cpp:162 : $$reduc_pvt_T133_T289
+      mov.s32              %s14, %u1;                  // gpumd.cpp:162 : $$INDUC_P26_T153
+      setp.ge.u32          %p49, %u1, %u4;             // gpumd.cpp:162
+      @%p49 bra            $main$ck_L101_1__l411__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd11, %u4;                 // gpumd.cpp:162 : $$T_INDUC_P26_H3_T157
+      mov.u32              %u7, %u5;                   // gpumd.cpp:162 : $$LIS_89_T165
+$main$ck_L101_1__l407__:
+      .loc                 1  162  0
+      cvt.s64.s32          %sd284, %s14;               // gpumd.cpp:162
+      shl.b64              %bd52, %sd284, 3;           // gpumd.cpp:162
+      ld.param.s64         %sd285, [$$arg_ptr_reduc_val_T134_T290];// gpumd.cpp:162 : $$arg_ptr_reduc_val_T134_T290
+      add.s64              %sd286, %sd285, %bd52;      // gpumd.cpp:162
+      ld.global.f64        %fd234, [%sd286];           // gpumd.cpp:162 : 0[$$arg_ptr_reduc_val_T134_T290,.(long) $$INDUC_P26_T153].L
+      add.rn.f64           %fd26, %fd26, %fd234;       // gpumd.cpp:162 : $$reduc_pvt_T133_T289
+      add.u32              %s14, %s14, %u7;            // gpumd.cpp:162 : $$INDUC_P26_T153
+      cvt.s64.s32          %sd287, %s14;               // gpumd.cpp:162
+      setp.lt.s64          %p50, %sd287, %sd11;        // gpumd.cpp:162
+      @%p50 bra            $main$ck_L101_1__l407__;    // gpumd.cpp:162
+$main$ck_L101_1__l411__:
+      .loc                 1  162  0
+      cvt.u64.u32          %ud12, %tid.x;              // gpumd.cpp:162
+      shl.b64              %bd53, %ud12, 3;            // gpumd.cpp:162
+      mov.s64              %sd288, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd289, %sd288, %bd53;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd289], %fd26;          // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) _acc_read_hw_reg(%tid.x)].L
+      bar.sync             0;                          // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd27, [%sd289];          // gpumd.cpp:162 : $redfold_left_temp_T204
+      mov.u32              %u18, %tid.x;               // gpumd.cpp:162
+      setp.ge.u32          %p51, %u18, 64;             // gpumd.cpp:162
+      @%p51 bra            $main$ck_L101_1__l414__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd290, %tid.x;             // gpumd.cpp:162
+      shl.b64              %bd54, %sd290, 3;           // gpumd.cpp:162
+      mov.s64              %sd291, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd292, %sd291, %bd54;      // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd235, [%sd292 + 512];   // gpumd.cpp:162 : 64[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd27, %fd27, %fd235;       // gpumd.cpp:162 : $redfold_left_temp_T204
+      cvt.u64.u32          %ud13, %tid.x;              // gpumd.cpp:162
+      shl.b64              %bd55, %ud13, 3;            // gpumd.cpp:162
+      add.s64              %sd293, %sd291, %bd55;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd293], %fd27;          // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) _acc_read_hw_reg(%tid.x)].L
+$main$ck_L101_1__l414__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      mov.u32              %u19, %tid.x;               // gpumd.cpp:162
+      setp.ge.u32          %p52, %u19, 32;             // gpumd.cpp:162
+      @%p52 bra            $main$ck_L101_1__l417__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      cvt.s64.u32          %sd294, %tid.x;             // gpumd.cpp:162
+      shl.b64              %bd56, %sd294, 3;           // gpumd.cpp:162
+      mov.s64              %sd295, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      add.s64              %sd296, %sd295, %bd56;      // gpumd.cpp:162
+      ld.volatile.shared.f64 %fd236, [%sd296 + 256];   // gpumd.cpp:162 : 32[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd237, %fd27, %fd236;      // gpumd.cpp:162
+      mov.f64              %fd27, %fd237;              // gpumd.cpp:162 : $redfold_left_temp_T204
+      cvt.u64.u32          %ud14, %tid.x;              // gpumd.cpp:162
+      shl.b64              %bd57, %ud14, 3;            // gpumd.cpp:162
+      add.s64              %sd297, %sd295, %bd57;      // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd297], %fd237;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_225_T269].L
+      ld.volatile.shared.f64 %fd238, [%sd296 + 128];   // gpumd.cpp:162 : 16[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd239, %fd237, %fd238;     // gpumd.cpp:162
+      mov.f64              %fd27, %fd239;              // gpumd.cpp:162 : $redfold_left_temp_T204
+      st.volatile.shared.f64 [%sd297], %fd239;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_225_T269].L
+      ld.volatile.shared.f64 %fd240, [%sd296 + 64];    // gpumd.cpp:162 : 8[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd241, %fd239, %fd240;     // gpumd.cpp:162
+      mov.f64              %fd27, %fd241;              // gpumd.cpp:162 : $redfold_left_temp_T204
+      st.volatile.shared.f64 [%sd297], %fd241;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_225_T269].L
+      ld.volatile.shared.f64 %fd242, [%sd296 + 32];    // gpumd.cpp:162 : 4[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd243, %fd241, %fd242;     // gpumd.cpp:162
+      mov.f64              %fd27, %fd243;              // gpumd.cpp:162 : $redfold_left_temp_T204
+      st.volatile.shared.f64 [%sd297], %fd243;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_225_T269].L
+      ld.volatile.shared.f64 %fd244, [%sd296 + 16];    // gpumd.cpp:162 : 2[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd245, %fd243, %fd244;     // gpumd.cpp:162
+      mov.f64              %fd27, %fd245;              // gpumd.cpp:162 : $redfold_left_temp_T204
+      st.volatile.shared.f64 [%sd297], %fd245;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_225_T269].L
+      ld.volatile.shared.f64 %fd246, [%sd296 + 8];     // gpumd.cpp:162 : 1[_&$$_redfold_T194,_acc_read_hw_reg(%tid.x)].L
+      add.rn.f64           %fd247, %fd245, %fd246;     // gpumd.cpp:162
+      st.volatile.shared.f64 [%sd297], %fd247;         // gpumd.cpp:162 : 0[_&$$_redfold_T194,.(long) .(unsigned long) $$LVN_225_T269].L
+      mov.f64              %fd27, %fd247;              // gpumd.cpp:162 : $redfold_left_temp_T204
+$main$ck_L101_1__l417__:
+      .loc                 1  162  0
+      bar.sync             0;                          // gpumd.cpp:162
+      mov.s64              %sd298, $$_redfold_T194__f1s1166;// gpumd.cpp:162
+      ld.volatile.shared.f64 %fd28, [%sd298];          // gpumd.cpp:162 : $redfinal_T206
+      bar.sync             0;                          // gpumd.cpp:162
+      setp.ne.u32          %p53, %u3, 0;               // gpumd.cpp:162
+      @%p53 bra            $main$ck_L101_1__l420__;    // gpumd.cpp:162
+      .loc                 1  162  0
+      ld.param.s64         %sd299, [$$arg_ptr_acc_speed_sum_T73_T276];// gpumd.cpp:162 : $$arg_ptr_acc_speed_sum_T73_T276
+      ld.global.f64        %fd248, [%sd299];           // gpumd.cpp:162 : 0[$$arg_ptr_acc_speed_sum_T73_T276,0].L
+      add.rn.f64           %fd249, %fd248, %fd28;      // gpumd.cpp:162
+      st.global.f64        [%sd299], %fd249;           // gpumd.cpp:162 : 0[$$arg_ptr_acc_speed_sum_T73_T276,0].L
+$main$ck_L101_1__l420__:
+      exit;
+      } // main$ck_L101_1
+
